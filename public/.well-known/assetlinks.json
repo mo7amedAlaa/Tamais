@@ -1,0 +1,13 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.ymtaz.ymtaz",
+        "sha256_cert_fingerprints": [
+          "4A:0E:F9:D0:26:50:FF:80:01:81:75:EC:E6:B3:BF:80:17:66:1B:51:3B:1F:D8:A1:00:7A:EF:DF:B8:F7:D0:37"
+        ]
+      }
+    }
+  ]
+  

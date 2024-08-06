@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    nextjs:
+        build:
+            context: .
+            dockerfile: DockerFile
+        ports:
+            - '3000:3000'
+        environment:
+            - HOSTNAME=0.0.0.0
