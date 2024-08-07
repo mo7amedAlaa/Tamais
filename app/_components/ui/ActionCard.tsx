@@ -15,7 +15,7 @@ function ActionCard({title,icon}:RequestProps) {
       <span className='text-[#00262F]'>{title}</span> 
       </div>
       <div>
-      <Image  src={arrow} alt={arrow} className='w-5 h-5       '/>
+      <Image  src={arrow} alt={'arrow'} className='w-5 h-5       '/>
       </div>
     </div>
   )
