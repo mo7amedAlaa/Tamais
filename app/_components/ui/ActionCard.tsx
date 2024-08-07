@@ -1,6 +1,11 @@
 import arrow from '@/public/Icons/Right 10.png';
 import Image from 'next/image';
 function ActionCard({title,icon}) {
+  interface RequestProps {
+  icon: string;
+  title: string;
+  
+}
   return (
     <div className="w-[278px] h-15 rounded-xl bg-[#FFFFFF]  
  shadow-action  flex items-center justify-between   p-4  cursor-pointer    ">
