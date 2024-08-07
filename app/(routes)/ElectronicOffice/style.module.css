@@ -1,0 +1,69 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Styles for screens wider than 768px (tablet and desktop) */
+@media (min-width: 768px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Styles for screens wider than 480px (phones in landscape mode and tablets) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Styles for screens smaller than 480px (phones in portrait mode) */
+@media (max-width: 479px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+.item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  color: #CDCDCD;
+  padding: 10px;
+  
+}
+.nav {
+  display: flex;
+  justify-content: space-around;
+}
+.navItem {
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-bottom: 3px solid #CDCDCD;
+  color: #CDCDCD;
+  font-weight: 600;
+  line-height: 29.98px;
+  font-size: 16px;
+  
+}
+
+.navItem.active {
+  border-bottom: 2px solid #DDB762;
+  color: #DDB762;
+  font-weight: 700;
+  line-height: 29.98px;
+  font-size: 16px;
+}
+.status{
+    padding: 20px;
+}
+ 
+ 

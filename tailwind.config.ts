@@ -12,6 +12,8 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+           "iconAdd":"background: linear-gradient(180deg, #DDB762 0%, #E9C983 89.96%)"
+
       },
       screens: {
         "2xsm": "375px",
@@ -228,6 +230,8 @@ const config: Config = {
         default: "0px 8px 13px -3px rgba(0, 0, 0, 0.07)",
         card: "0px 1px 3px rgba(0, 0, 0, 0.12)",
         "card-2": "0px 1px 2px rgba(0, 0, 0, 0.05)",
+        "requstCard":"0px 7px 15px 0px rgba(0, 0, 0, 0.1)",
+        'action':'0px 3px 16px 0px #0000000F',
         switcher:
           "0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #FFFFFF, inset 0px -1px 1px rgba(0, 0, 0, 0.1)",
         "switch-1": "0px 0px 5px rgba(0, 0, 0, 0.15)",
