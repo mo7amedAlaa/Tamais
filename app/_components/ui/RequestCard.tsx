@@ -1,6 +1,6 @@
 import Image from "next/image";
 interface RequestProps {
-  icon: string;
+  icon: any;
   title: string;
   color: string;
 }
