@@ -2,7 +2,7 @@ import arrow from '@/public/Icons/Right 10.png';
 import Image from 'next/image';
   interface RequestProps {
     title: string;
-    icon: string;
+    icon: any;
   
 }
 function ActionCard({title,icon}:RequestProps) {
