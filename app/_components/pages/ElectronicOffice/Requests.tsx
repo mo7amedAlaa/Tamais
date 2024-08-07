@@ -5,14 +5,9 @@ import vector from '@/public/Icons/Vector.png';
 import React from 'react';
 import RequestCard from '../../ui/RequestCard';
 import ThirdHead from '../../ui/ThirdHead';
-interface RequestsProps {
-  total: string;
-  completed: string;
-  waiting: string;
-  late: string;
-}
 
-  const Requests: React.FC<RequestsProps> = () => {
+
+  const Requests: React.FC = () => {
   return (
     <div className="Requests">
     <ThirdHead title={'الطلبات'}/>
