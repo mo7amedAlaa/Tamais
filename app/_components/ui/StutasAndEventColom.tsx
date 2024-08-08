@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import CardHead from './CardHead'
 import StatusCircle from '../pages/ElectronicOffice/StatusCircle'
 import styles from '../../(routes)/ElectronicOffice/style.module.css'
 import { useState } from "react";
