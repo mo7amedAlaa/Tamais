@@ -47,5 +47,6 @@ export const API_ENDPOINTS = {
 	MERGED_CONFIRM_OTP_ON_CHANGE: '/v1/auth/confirm-otp',
 	MERGED_RESEND_OTP_ON_CHANGE: '/v1/auth/resend-otp',
 	CONTACT_US: '/v1/contact-us',
+	LAWYER_ANALYTICS:'/lawyer/profile/analytics',
 };
 export const PROFILE_TYPE = 'profileType';

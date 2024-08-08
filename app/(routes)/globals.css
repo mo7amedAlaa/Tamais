@@ -143,3 +143,11 @@ body {
   .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
 	box-shadow: -10px 0 0 #3c50e0;
   }
+  .relative {
+  position: relative;
+}
+
+.relative::before {
+  content: var(--card-color);
+  background-color: var(--before-bg-color);
+}

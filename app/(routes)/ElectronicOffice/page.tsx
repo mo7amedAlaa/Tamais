@@ -10,29 +10,20 @@ import SecondHead from '@/app/_components/ui/SecondHead';
 import ThirdHead from '@/app/_components/ui/ThirdHead';
 import React from 'react';
 import style from './style.module.css';
+import StutasAndEventColom from '@/app/_components/ui/StutasAndEventColom';
 const Page: React.FC = () => {
   const values = [9, 34, 34];
   const colors = ["#E56262", "#DDB762", "#00262F"]
-  const statuses = [
-    { label: 'مكتمل', value: 30, color: '#E56262' },
-    { label: 'منتظر', value: 20, color: '#DDB762' },
-    { label: 'متأخر', value: 50, color: '#00262F' }
-  ];
+  
   return (
-    <div className='container  ' >
+    <div className='container mx-auto' >
       <SecondHead title={'المكتب الالكتروني'} />
       <div className={style.dashboard}>
         <div className={style.item}>
-          <CardHead />
-          <div className="p-6">
-            <StatusCircle values={values} colors={colors} statuses={statuses} />
-          </div>
-          <div className={style.event}>
-            <ThirdHead title={'الاحداث'} />
-            <ConsultationCard />
-          </div>
+        <StutasAndEventColom/>
+          
         </div>
-        <div className={'flex-1'}>
+        <div className={style.details}>
           <Balance currentBalance="32,423" pendingBalance="3900" />
           <Requests  />
           <ThirdHead title={'التخصيص'}/>

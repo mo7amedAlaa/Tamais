@@ -11,7 +11,7 @@ import ThirdHead from '../../ui/ThirdHead';
   return (
     <div className="Requests">
     <ThirdHead title={'الطلبات'}/>
-      <div className='flex justify-between items-center'> 
+      <div className='flex   justify-between items-center  gap-3 md:gap-5 flex-wrap p-5 md:p-0 '> 
         <RequestCard icon={brif}   title='استشاراتي'     color='#DDB762'/>
         <RequestCard icon={r2}     title='خدماتي'      color='#00262F' />
         <RequestCard icon={vector} title='مواعيدي'     color='#DDB762' />

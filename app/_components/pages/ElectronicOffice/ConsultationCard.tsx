@@ -2,7 +2,11 @@ import React from 'react';
 import { IoEyeSharp } from "react-icons/io5";
 import MainButton from '../../ui/MainButton';
 import { BsCalendar2Date, BsCalendar2Fill } from 'react-icons/bs';
-
+import time from '@/public/Icons/time.png'
+import date from '@/public/Icons/date.png'
+import price from '@/public/Icons/price.png'
+import star from '@/public/Icons/star.png'
+import Image from 'next/image';
 
 
 const ConsultationCard: React.FC = () => {
@@ -16,11 +20,11 @@ const ConsultationCard: React.FC = () => {
        <div className=" flex   rounded-md w-full h-[100px] max-w-md gap-2 items-center  ">
           <div className="flex   flex-col  pb-2 mb-2  flex-1  justify-center  gap-2  ">
             <div className='flex items-center justify-between flex-1'>
-              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <BsCalendar2Fill className=' text-[#EEDBB0] w-[16px] h-[16px]'/> التاريخ</div>
+              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2">  <Image src={date} alt="date icon" /> التاريخ</div>
               <div className="text-[10px] font-[600] leading-[18.74px] text-[#A6A4A4] ">6/12/2024</div>
             </div>
             <div className='flex items-center justify-between flex-1'>
-              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <BsCalendar2Fill className=' text-[#EEDBB0] w-[16px] h-[16px]'/> الوقت</div>
+              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2">  <Image src={time} alt='timeIcon' /> الوقت</div>
               <div className="text-[10px] font-[600] leading-[18.74px] text-[#A6A4A4] ">12:30 م</div>
             </div>
             
@@ -31,11 +35,11 @@ const ConsultationCard: React.FC = () => {
           </div>
           <div className="flex  pb-2 mb-2   flex-col justify-center flex-1 gap-2 ">
              <div className='flex items-center justify-between flex-1'>
-              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <BsCalendar2Fill className=' text-[#EEDBB0] w-[16px] h-[16px]'/> درجة الأهمية</div>
+              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <Image src={star} alt='starIcon' /> درجة الأهمية</div>
               <div className="text-[10px] font-[600] leading-[18.74px] text-[#A6A4A4] ">مهم جدا</div>
             </div>
              <div className='flex items-center justify-between flex-1'>
-              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <BsCalendar2Fill className=' text-[#EEDBB0] w-[16px] h-[16px]'/>  السعر</div>
+              <div className="text-sm text-gray-600 flex items-center text-[10px] font-[600] leading-[18.74px] gap-2"> <Image src={price} alt='priceIcon' /> السعر</div>
               <div className="text-[10px] font-[600] leading-[18.74px] text-[#A6A4A4] ">  350 درهم</div>
             </div>
              
