@@ -1,12 +1,13 @@
 'use client'
-import React from 'react'
-import StatusCircle from '../pages/ElectronicOffice/StatusCircle'
-import styles from '../../(routes)/ElectronicOffice/style.module.css'
 import { useState } from "react";
-import ThirdHead from './ThirdHead'
-import ConsultationCard from '../pages/ElectronicOffice/ConsultationCard'
+import styles from '../../(routes)/ElectronicOffice/style.module.css';
+import ConsultationCard from '../pages/ElectronicOffice/ConsultationCard';
+import StatusCircle from '../pages/ElectronicOffice/StatusCircle';
+import ThirdHead from './ThirdHead';
+type TabType = "services" | "advisoryServices" | "appointments";
+
 function StutasAndEventColom() {
-     const [activeTab, setActiveTab] = useState('advisoryServices')
+const [activeTab, setActiveTab] = useState<TabType>('advisoryServices');
   return (
     <div>
          <div className={styles.cardHeader}>
