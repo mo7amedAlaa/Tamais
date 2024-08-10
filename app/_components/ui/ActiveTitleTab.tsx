@@ -4,7 +4,7 @@ import styles from '../../(routes)/ElectronicOffice/style.module.css';
 
 type ActiveTitleTabProps = {
   activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction>;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
   buttonTitles: {
     [key: string]: string;  
   };
