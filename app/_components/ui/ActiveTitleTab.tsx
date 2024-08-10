@@ -1,10 +1,10 @@
 // ActiveTitleTab.tsx
 import { FC } from "react";
 import styles from '../../(routes)/ElectronicOffice/style.module.css';
-
+type TabType=string;
 type ActiveTitleTabProps = {
   activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+  setActiveTab: React.Dispatch<React.SetStateAction<TabType>>;
   buttonTitles: {
     [key: string]: string;  
   };

@@ -3,10 +3,10 @@
 import { useState } from "react";
 import ConsultationCard from '../pages/ElectronicOffice/ConsultationCard';
 import StatusCircle from '../pages/ElectronicOffice/StatusCircle';
-import ThirdHead from './ThirdHead';
 import ActiveTitleTab from "./ActiveTitleTab";
+import ThirdHead from './ThirdHead';
 
-type TabType = "services" | "advisoryServices" | "appointments";
+type TabType = string;
 
 function StutasAndEventColom() {
   const [activeTab, setActiveTab] = useState<TabType>('advisoryServices');
