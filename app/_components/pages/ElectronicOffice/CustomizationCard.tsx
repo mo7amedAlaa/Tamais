@@ -1,7 +1,7 @@
 'use client'
 import dollar from '@/public/Icons/dollar.svg'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 interface ServiceCardProps{
     active:boolean
     title:string
@@ -9,7 +9,7 @@ interface ServiceCardProps{
     price2:string
     price3:string
 }
-function CustomizationCard({active,title,price1,price2,price3}):React.FC<ServiceCardProps> {
+function CustomizationCard({active,title,price1,price2,price3}:ServiceCardProps) {
      const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
