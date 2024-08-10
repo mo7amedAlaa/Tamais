@@ -30,27 +30,7 @@ function ConsultationsRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
-      />
-        <RequestConsultationCard
-        status="مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
-      />
-        <RequestConsultationCard
-        status="مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
+        senderImage={`${avatar}`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -60,17 +40,7 @@ function ConsultationsRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
-      />
-        <RequestConsultationCard
-        status="مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
+        senderImage={`${avatar}`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -80,7 +50,7 @@ function ConsultationsRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
+        senderImage={`${avatar}`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -90,37 +60,17 @@ function ConsultationsRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
+        senderImage={`${avatar}`}
       />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage= {avatar}
-      />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={avatar}
-      />
+        
+       
       </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        
   
         </div>}
     </div>
