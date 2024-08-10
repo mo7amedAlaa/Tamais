@@ -65,11 +65,11 @@ function ConsultationsRequests() {
         
        
       </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
-        <RequestCleint cleintImage={`${avatar}`} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+       
         
   
         </div>}
