@@ -1,11 +1,11 @@
 'use client';
 import { analytics } from '@/app/_api/queries/office.query';
 import { useMutation } from '@tanstack/react-query';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface StatusCircleProps {
-  type: 'services' | 'advisoryServices' | 'appointments';  
+  type: string;  
 }
 
 const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
