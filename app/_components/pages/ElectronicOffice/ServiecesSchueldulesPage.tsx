@@ -5,7 +5,7 @@ import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
 
 registerLicense("Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhAYVtpR2Nbe053flZFalhWVBYiSV9jS3pTfkVqW39cdXVWTmdVUQ==");
 
-function ConsultatSheldulersPage() {
+function ServicesSheldulersPage() {
   const data = [
     {
       id: 1,
@@ -59,4 +59,4 @@ function ConsultatSheldulersPage() {
   );
 }
 
-export default ConsultatSheldulersPage;
+export default ServicesSheldulersPage;

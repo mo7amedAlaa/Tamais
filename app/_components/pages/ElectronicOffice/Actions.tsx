@@ -22,13 +22,13 @@ const Actions: React.FC = () => {
    <Link href={'/ElectronicOffice/AddService'} >
     <ActionCard title="اضافة خدمة" icon={addIcon} />
    </Link>
-   <Link href={''}>
+   <Link href={'/ElectronicOffice/serviecescheldulers'}>
     <ActionCard title="مواقيت العمل للخدمات" icon={Exclude} />
    </Link>
    <Link href={'/ElectronicOffice/AddSchedules'}>
     <ActionCard title="اضافة موعد" icon={addIcon} />
    </Link>
-   <Link href={''}>
+   <Link href={'/ElectronicOffice/appointmentsscheldulers'}>
     <ActionCard title="مواقيت العمل للمواعيد" icon={Exclude} />
    </Link>
    </div>

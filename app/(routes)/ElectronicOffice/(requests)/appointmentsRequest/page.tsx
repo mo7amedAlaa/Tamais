@@ -1,9 +1,9 @@
+import AppointmentsRequest from '@/app/_components/pages/ElectronicOffice/AppointmentsRequest'
 import React from 'react'
 
 function MyAppointments() {
   return (
-    <div>
- MyAppointments    </div>
+    <AppointmentsRequest/>
   )
 }
 

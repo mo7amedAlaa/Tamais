@@ -1,11 +1,9 @@
 'use client'
 import { registerLicense } from "@syncfusion/ej2-base";
 import { Day, Inject, Month, ScheduleComponent, ViewDirective, ViewsDirective, Week } from '@syncfusion/ej2-react-schedule';
-import 'tailwindcss/tailwind.css'; // Import Tailwind CSS
-
 registerLicense("Ngo9BigBOggjHTQxAR8/V1NCaF1cWWhAYVtpR2Nbe053flZFalhWVBYiSV9jS3pTfkVqW39cdXVWTmdVUQ==");
 
-function ConsultatSheldulersPage() {
+function AppointmentsSheldulersPage() {
   const data = [
     {
       id: 1,
@@ -59,4 +57,4 @@ function ConsultatSheldulersPage() {
   );
 }
 
-export default ConsultatSheldulersPage;
+export default AppointmentsSheldulersPage;
