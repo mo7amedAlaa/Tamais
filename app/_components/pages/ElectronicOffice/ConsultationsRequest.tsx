@@ -5,8 +5,9 @@ import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
 import avatar from '@/public/avatar1.png';
 import { useState } from 'react';
+type TabType = "Customers" | "DigitalGuide" ;
 function ConsultationsRequests() {
-    const [activeTab, setActiveTab] = useState<TabType>('Customers');
+  const [activeTab, setActiveTab] = useState<TabType>('Customers');
    const buttonTitles = {
     Customers: "العملاء",
     DigitalGuide: "الدليل الرقمي",
