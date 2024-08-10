@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 const ConsultationCard: React.FC = () => {
   return (
-    <div className="max-w-full rounded-lg shadow-lg p-6 bg-white  my-10 ">
+    <div className="max-w-full rounded-lg shadow-lg p-6 bg-white  my-1  lg:my-10 max-h-[400px]   ">
       <div className="flex justify-between items-center mb-6">
         <div className="flex gap-1 items-center justify-start text-[14px] font-[600] text-[#00262F]  "> <span className='w-[20px] h-[20px] text-[#DDB762]'><IoEyeSharp className='w-full h-full'/></span>استشارة مرئية</div>
         <MainButton className='w-[90px] text-[12px] h-[27px] py-[5.37px] px-[16.89px]  '>قيدالدراسة</MainButton>

@@ -9,7 +9,7 @@ interface RequestProps {
 function RequestCard({ icon, title, color }: RequestProps) {
   return (
     <div
-      className={'relative flex-1 h-13 flex items-center gap-2 p-5 rounded-[10px] bg-white my-2 md:my-6 shadow-requstCard cursor-pointer'}
+      className={'relative flex-1 h-13 flex items-center gap-2 p-5 rounded-[10px] bg-white  lg:my-6 shadow-requstCard cursor-pointer'}
       style={{ 
         borderRightColor: color 
       }}

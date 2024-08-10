@@ -16,7 +16,6 @@ const Page: React.FC = () => {
       <div className={style.dashboard}>
         <div className={style.item}>
         <StutasAndEventColom/>
-          
         </div>
         <div className={style.details}>
           <Balance currentBalance="32,423" pendingBalance="3900" />

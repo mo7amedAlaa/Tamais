@@ -1,0 +1,129 @@
+'use client'
+import RequestCleint from '@/app/_components/pages/ElectronicOffice/RequestCleint';
+import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
+import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
+import SecondHead from '@/app/_components/ui/SecondHead';
+import avatar from '@/public/avatar1.png';
+import { useState } from 'react';
+function ConsultationsRequests() {
+    const [activeTab, setActiveTab] = useState<TabType>('Customers');
+   const buttonTitles = {
+    Customers: "العملاء",
+    DigitalGuide: "الدليل الرقمي",
+  };
+  return (
+    <div className='container mx-auto min-h-screen'>
+    <SecondHead title={'طلبات الاستشارات'} />
+       <ActiveTitleTab
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        buttonTitles={buttonTitles}
+      />
+      {activeTab==='DigitalGuide'?
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage= {avatar}
+      />
+        <RequestConsultationCard
+        status="غير مكتملة"
+        title="استشارة أفراد مرئية"
+        date="6/12/2024"
+        time="12:30 ص"
+        importance="مهم جدا"
+        price="350"
+        senderName="عبدالله حسن المالكي"
+        senderImage={avatar}
+      />
+      </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+        <RequestCleint cleintImage={avatar} cleintName={'معتز حسن المالكي'} cleintCountry={'المملكة العربية السعودية'} cleintLocation={'الرياض'}/>
+  
+        </div>}
+    </div>
+  )
+}
+
+export default ConsultationsRequests

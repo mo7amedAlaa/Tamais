@@ -188,7 +188,7 @@ const Header = () => {
 
 								<hr className="border-slate-100" />
 								<Link
-									href="#"
+									href="/ElectronicOffice"
 									className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
 								>
 									<FaBalanceScale size="18px" /> المكتب
