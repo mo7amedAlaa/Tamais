@@ -30,7 +30,7 @@ function ServicesRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={`${avatar}`}
+        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -40,7 +40,7 @@ function ServicesRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={`${avatar}`}
+        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -50,7 +50,7 @@ function ServicesRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={`${avatar}`}
+        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -60,7 +60,7 @@ function ServicesRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={`${avatar}`}
+        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
       />
         <RequestConsultationCard
         status="غير مكتملة"
@@ -70,15 +70,15 @@ function ServicesRequests() {
         importance="مهم جدا"
         price="350"
         senderName="عبدالله حسن المالكي"
-        senderImage={`${avatar}`}
+        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
       />
         
        
       </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`${avatar}`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
+        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
         
         
         </div>}

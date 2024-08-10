@@ -26,6 +26,8 @@ const RequestClient: React.FC<RequestClientProps> = ({
             src={clientImage}
             alt="Client Image"
             className="w-[50px] h-[50px] rounded-full"
+            width={50}
+            height={50}
           />
         </div>
         <div className="flex-1 p-3">
@@ -33,11 +35,11 @@ const RequestClient: React.FC<RequestClientProps> = ({
             {clientName}
           </h3>
           <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right mb-4 gap-1">
-            <Image src={flagIcon} alt="Flag" />
+            <Image src={flagIcon} alt="Flag"   />
             {clientCountry}
           </div>
           <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right gap-1">
-            <Image src={loctionIcon} alt="Location" />
+            <Image src={loctionIcon} alt="Location"    />
             {clientLocation}
           </div>
         </div>

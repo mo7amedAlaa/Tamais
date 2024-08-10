@@ -229,6 +229,8 @@ const config: Config = {
       },
       boxShadow: {
         default: "0px 8px 13px -3px rgba(0, 0, 0, 0.07)",
+        'custom-inset-1': '1px 1px 2px 0px #AEAEC033 inset',
+        'custom-inset-2': '-1px -1px 1px 0px #FFFFFFB2 inset',
         card: "0px 1px 3px rgba(0, 0, 0, 0.12)",
         "card-2": "0px 1px 2px rgba(0, 0, 0, 0.05)",
         "requstCard":"0px 7px 15px 0px rgba(0, 0, 0, 0.1)",
