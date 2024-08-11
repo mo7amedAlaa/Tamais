@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { FaClock } from "react-icons/fa6";
 import MainButton from '../../ui/MainButton';
+import toast from 'react-hot-toast';
 
 interface BalanceProps {
   pendingAction?:number 
