@@ -1,12 +1,10 @@
-import React from 'react';
-import { IoDocumentText } from 'react-icons/io5';
-import { FaUsers } from 'react-icons/fa';
 import Link from 'next/link';
+import { FaUserPlus, FaUsers } from 'react-icons/fa';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 import { ImHammer2 } from 'react-icons/im';
 import { IoLogoYoutube } from 'react-icons/io';
-import { FaUserPlus } from 'react-icons/fa';
+import { IoDocumentText } from 'react-icons/io5';
 import { PiCirclesFourFill } from 'react-icons/pi';
-import { FaArrowLeftLong } from 'react-icons/fa6';
 
 const Feature = () => {
 	return (
@@ -128,7 +126,7 @@ const Feature = () => {
 						<span className="mr-auto">
 							<FaArrowLeftLong />
 						</span>
-					</div>
+					</div>	
 				</div>
 			</div>
 		</div>

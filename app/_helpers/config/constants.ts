@@ -48,5 +48,11 @@ export const API_ENDPOINTS = {
 	MERGED_RESEND_OTP_ON_CHANGE: '/v1/auth/resend-otp',
 	CONTACT_US: '/v1/contact-us',
 	LAWYER_ANALYTICS:'/lawyer/profile/analytics',
+	LAWYER_CLIENT:'lawyer/profile/clients',
+	LAWYER_WALLET:"lawyer/payouts/wallet",
+	ADVISORY_SERVICES_DIGITAL:"lawyer/advisory-services/requested/lawyer",
+	ADVISORY_SERVICES_CLIENT:"lawyer/advisory-services/requested/client",
+	ADVISORY_APPOINTMENTS_DIGITAL:"lawyer/reservations/lawyers",
+	ADVISORY_APPOINTMENTS_CLIENT:"lawyer/reservations/clients"
 };
 export const PROFILE_TYPE = 'profileType';

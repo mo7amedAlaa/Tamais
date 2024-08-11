@@ -24,3 +24,14 @@ export interface analytics{
             total: 0
         }
 }
+export interface Clients{
+    [
+        id:number,
+        name:string,
+        type:number,
+        image:string,
+        nationality:{id:number,name:string},
+        gender:string
+            
+        ]
+}

@@ -11,12 +11,14 @@ import { FaBalanceScale } from 'react-icons/fa';
 import { LuLogOut } from 'react-icons/lu';
 import { IoBook } from 'react-icons/io5';
 import Link from 'next/link';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
+import { FaChevronDown, FaChevronUp, FaRegHeart } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
 import useUserProfile from '@/app/_helpers/hooks/useUserProfile';
 import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, PROFILE_TYPE } from '@/app/_helpers/config/constants';
 import { useQueryClient } from '@tanstack/react-query';
+import { GrLanguage } from "react-icons/gr";
+
 const Header = () => {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -156,8 +158,14 @@ const Header = () => {
 							</div>
 						</button>
 
-						<div>
+						<div className='cursor-pointer '>
 							<FaRegBell size="23px" />
+						</div>
+						<div className='cursor-pointer '>
+							<FaRegHeart  size="23px"  />
+						</div>
+						<div className='cursor-pointer '>
+							<GrLanguage size="23px" />
 						</div>
 
 						{isDropdownOpen && (

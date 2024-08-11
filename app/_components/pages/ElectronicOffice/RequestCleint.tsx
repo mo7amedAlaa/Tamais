@@ -8,7 +8,7 @@ interface RequestClientProps {
   clientImage: string;
   clientName: string;
   clientCountry: string;
-  clientLocation: string;
+  clientLocation?: string;
 }
 
 // Define the functional component

@@ -1,17 +1,70 @@
 'use client'
+import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
 import RequestCleint from '@/app/_components/pages/ElectronicOffice/RequestCleint';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
-import avatar from '@/public/avatar1.png';
-import { useState } from 'react';
-type TabType=string;
-function ServicesRequests() {
-    const [activeTab, setActiveTab] = useState<TabType>('Customers');
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+type TabType =  string ;
+function ConsultationsRequests() {
+  const [activeTab, setActiveTab] = useState<TabType>('Customers');
    const buttonTitles = {
     Customers: "العملاء",
     DigitalGuide: "الدليل الرقمي",
   };
+   const [loading, setLoading] = useState<boolean>(false);  
+  const [error, setError] = useState<string | null>(null);  
+  const [clientsReservations, setClientsReservations] = useState<any>(null);
+  const [digitalReservations, setDigitalReservations] = useState<any>(null);
+ 
+  const { mutate:fetchReservationsFromDigitalGuide } = useMutation({
+    mutationFn: getListReservedFromDigitalGuide,
+    onSuccess: (res: any) => {
+      if (res.status === 200) {
+        setDigitalReservations(res.data.data.reservations);
+        console.log('Data fetched successfully', digitalReservations);
+      } else {
+        setError('حدث خطأ أثناء جلب البيانات');
+        console.log('Error fetching data');
+      }
+      setLoading(false);
+    },
+    onError: (error: any) => {
+      setError('حدث خطأ أثناء جلب البيانات');
+      toast.error('حدث خطأ أثناء جلب البيانات');
+      console.log('Error:', error);
+      setLoading(false);
+    },
+  });
+  const { mutate:fetchReservationsFromClients } = useMutation({
+    mutationFn: getListReservedFromClient,
+    onSuccess: (res: any) => {
+      if (res.status === 200) {
+        setClientsReservations(res.data.data.reservations);
+        console.log('Data fetched successfully', clientsReservations);
+      } else {
+        setError('حدث خطأ أثناء جلب البيانات');
+        console.log('Error fetching data');
+      }
+      setLoading(false);
+    },
+    onError: (error: any) => {
+      setError('حدث خطأ أثناء جلب البيانات');
+      toast.error('حدث خطأ أثناء جلب البيانات');
+      console.log('Error:', error);
+      setLoading(false);
+    },
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    fetchReservationsFromDigitalGuide();
+    fetchReservationsFromClients();
+  }, [fetchReservationsFromDigitalGuide,fetchReservationsFromClients]);
+
+  if (loading) return <div>Loading...</div>;  
+  if (error) return <div>Error:{error}</div>
   return (
     <div className='container mx-auto min-h-screen'>
     <SecondHead title={'طلبات الخدمات'} />
@@ -22,68 +75,31 @@ function ServicesRequests() {
       />
       {activeTab==='DigitalGuide'?
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
-      />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
-      />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
-      />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
-      />
-        <RequestConsultationCard
-        status="غير مكتملة"
-        title="استشارة أفراد مرئية"
-        date="6/12/2024"
-        time="12:30 ص"
-        importance="مهم جدا"
-        price="350"
-        senderName="عبدالله حسن المالكي"
-        senderImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`}
-      />
-        
        
+     {digitalReservations?.map((reservation,index)=><RequestConsultationCard key={reservation.id}
+        status={reservation.request_status}
+        title={reservation.advisory_services_id.title}
+        date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+        time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
+        importance={reservation.importance.title}
+        price={reservation.price}
+        senderName={reservation.lawyer.name}
+        senderImage={reservation.lawyer.photo}
+      />)}
       </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        <RequestCleint clientImage={`https://m.media-amazon.com/images/M/MV5BMTY2ODQ3NjMyMl5BMl5BanBnXkFtZTcwODg0MTUzNA@@._V1_.jpg`} clientName={'معتز حسن المالكي'} clientCountry={'المملكة العربية السعودية'} clientLocation={'الرياض'}/>
-        
-        
+        {clientsReservations?.map((reservation,index)=><RequestConsultationCard key={reservation.id}
+        status={reservation.request_status}
+        title={reservation.advisory_services_id.title}
+        date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+        time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
+        importance={reservation.importance.title}
+        price={reservation.price}
+        senderName={reservation.lawyer.name}
+        senderImage={reservation.lawyer.photo}
+      />)}
         </div>}
     </div>
   )
 }
 
-export default ServicesRequests
+export default ConsultationsRequests
