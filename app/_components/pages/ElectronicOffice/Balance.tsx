@@ -12,7 +12,7 @@ interface BalanceProps {
   transferred?:number
 }
 
-const Balance: React.FC<BalanceProps> = () => {
+const Balance: React.FC  = () => {
   const [loading, setLoading] = useState<boolean>(false);  
   const [error, setError] = useState<string | null>(null);  
   const [wallet, setWallet] = useState<any>(null);

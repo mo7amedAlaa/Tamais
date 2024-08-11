@@ -18,7 +18,7 @@ const Page: React.FC = () => {
         <StutasAndEventColom/>
         </div>
         <div className={style.details}>
-          <Balance currentBalance="32,423" pendingBalance="3900" />
+          <Balance  />
           <Requests  />
           <ThirdHead title={'التخصيص'}/>
           <Actions />
