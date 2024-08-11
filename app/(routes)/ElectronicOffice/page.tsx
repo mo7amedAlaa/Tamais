@@ -11,7 +11,7 @@ const Page: React.FC = () => {
   const colors = ["#E56262", "#DDB762", "#00262F"]
   
   return (
-    <div className='container mx-auto' >
+    <div className='container mx-auto min-h-screen' >
       <SecondHead title={'المكتب الالكتروني'} />
       <div className={style.dashboard}>
         <div className={style.item}>

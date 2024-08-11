@@ -5,15 +5,16 @@ interface ServiceCardProps{
     active:boolean
     title:string
     prices:[]
+    type:1|2|3
     
     
 }
-function CustomizationCard({active,title,prices}:ServiceCardProps) {
+function CustomizationCard({active,title,prices,type}:ServiceCardProps) {
   const handleClick = () => {
    //apiActions
   };
   return (
-      <div className="p-6 w-full bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px] ">
+      <div className="p-6 w-full h-52 bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px] ">
             <div className="mt-2 flex justify-between items-center font-[700]  text-right">
                 <span className="text-blue-500 font-bold flex gap-3 text-[#00262F]">{title}</span>
                 <button
@@ -26,10 +27,19 @@ function CustomizationCard({active,title,prices}:ServiceCardProps) {
                          <div className='bg-[#E9ECF2] w-full h-[1px] my-4'></div>
 
              <div className="mt-4 flex flex-col  text-[#00262F]  font-[600] gap-2">
-                    {prices?.map((price)=> <div key={price?.id} className="flex justify-between ">
+                   {type===1&& prices?.map((price)=> <div key={price?.id} className="flex justify-between ">
+                    <span className='flex gap-3 '> <Image src={dollar} alt="price-icon" />{price?.importance?.name} </span> 
+                    <span className='text-[#A6A4A4]'>{price?.price} رس</span>
+                </div>  ) }
+                   {type===2&& prices?.map((price)=> <div key={price?.id} className="flex justify-between ">
                     <span className='flex gap-3 '> <Image src={dollar} alt="price-icon" />{price?.level?.name} </span> 
                     <span className='text-[#A6A4A4]'>{price?.price} رس</span>
                 </div>  ) }
+                   {type===3 && prices?.map((price)=> <div key={price?.id} className="flex justify-between ">
+                    <span className='flex gap-3 '> <Image src={dollar} alt="price-icon" />{price?.level?.name} </span> 
+                    <span className='text-[#A6A4A4]'>{price?.price} رس</span>
+                </div>  ) }
+                    
                      
                  
                   
