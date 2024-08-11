@@ -1,8 +1,9 @@
+import Stepper from "@/app/_components/ui/Stepper"
 
 function page({params}) {
   return (
     <div>
-      consulID{params.consultationID}
+       <Stepper/>
     </div>
   )
 }

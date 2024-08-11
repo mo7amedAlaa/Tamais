@@ -17,7 +17,7 @@ const Stepper = () => {
             </span>
           </li>
 
-          <li className="flex items-center gap-2 bg-white p-2">
+          <li className="flex items-center gap-2 bg-white p-2 ">
             <span className="size-6 rounded-full bg-yellow-100 text-center text-[10px]/6 font-bold">
               {" "}
               3{" "}
