@@ -40,7 +40,9 @@ function Page() {
       <SecondHead title="تخصيص الاستشارات"/>
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
   {
-   AdvisoryAvailable?.map(advisory=><CustomizationCard key={advisory.id} title={advisory.types[0].title} active={advisory.types[0].is_activated} prices={advisory.types[0].lawyerPrices}    /> ) 
+   AdvisoryAvailable?.map(advisory=><div key={advisory.id}>
+    <CustomizationCard  title={advisory.types[0].title} active={advisory.types[0].is_activated} prices={advisory.types[0].lawyerPrices}    /> 
+    </div>) 
   }
      
     </div>
