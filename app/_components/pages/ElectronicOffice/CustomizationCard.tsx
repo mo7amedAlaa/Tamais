@@ -6,6 +6,7 @@ interface ServiceCardProps{
     title:string
     prices:[]
     
+    
 }
 function CustomizationCard({active,title,prices}:ServiceCardProps) {
   const handleClick = () => {
