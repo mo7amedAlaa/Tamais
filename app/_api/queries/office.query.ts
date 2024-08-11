@@ -13,11 +13,11 @@ export const getWallet = async () => {
     return { data, status };
 };
 export const getListReservedFromDigitalGuide = async () => {
-    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_DIGITAL);
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_ADVISORY_DIGITAL);
     return { data, status };
 };
 export const getListReservedFromClient = async () => {
-    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_CLIENT);
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_ADVISORY_CLIENT);
     return { data, status };
 };
 export const getListAppointmentsFromDigitalGuide = async () => {
@@ -26,5 +26,25 @@ export const getListAppointmentsFromDigitalGuide = async () => {
 };
 export const getListAppointmentsFromClient = async () => {
     const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_APPOINTMENTS_CLIENT);
+    return { data, status };
+};
+export const getListServicesFromDigitalGuide = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_DIGITAL);
+    return { data, status };
+};
+export const getListServicesFromClient = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_DIGITAL);
+    return { data, status };
+};
+export const getListAdvisoryAvailableForPricing = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_Advisory_Available);
+    return { data, status };
+};
+export const getListAppointmentAvailableForPricing = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_APPOINTMENTS_Available);
+    return { data, status };
+};
+export const getListServicesAvailableForPricing = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_Services_Available);
     return { data, status };
 };

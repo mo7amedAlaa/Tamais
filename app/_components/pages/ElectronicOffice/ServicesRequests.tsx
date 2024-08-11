@@ -1,5 +1,5 @@
 'use client'
-import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
+import { getListReservedFromClient, getListReservedFromDigitalGuide, getListServicesFromClient, getListServicesFromDigitalGuide } from '@/app/_api/queries/office.query';
 import RequestCleint from '@/app/_components/pages/ElectronicOffice/RequestCleint';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
@@ -20,10 +20,10 @@ function ConsultationsRequests() {
   const [digitalReservations, setDigitalReservations] = useState<any>(null);
  
   const { mutate:fetchReservationsFromDigitalGuide } = useMutation({
-    mutationFn: getListReservedFromDigitalGuide,
+    mutationFn: getListServicesFromDigitalGuide,
     onSuccess: (res: any) => {
       if (res.status === 200) {
-        setDigitalReservations(res.data.data.reservations);
+        setDigitalReservations(res.data.data.service_requests);
         console.log('Data fetched successfully', digitalReservations);
       } else {
         setError('حدث خطأ أثناء جلب البيانات');
@@ -39,10 +39,10 @@ function ConsultationsRequests() {
     },
   });
   const { mutate:fetchReservationsFromClients } = useMutation({
-    mutationFn: getListReservedFromClient,
+    mutationFn: getListServicesFromClient,
     onSuccess: (res: any) => {
       if (res.status === 200) {
-        setClientsReservations(res.data.data.reservations);
+        setClientsReservations(res.data.data.service_requests);
         console.log('Data fetched successfully', clientsReservations);
       } else {
         setError('حدث خطأ أثناء جلب البيانات');
@@ -79,24 +79,24 @@ function ConsultationsRequests() {
        
      {digitalReservations?.map((reservation,index)=><RequestConsultationCard key={reservation.id}
         status={reservation.request_status}
-        title={reservation.advisory_services_id.title}
+        title={reservation.service.title}
         date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
         time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
-        importance={reservation.importance.title}
+        importance={reservation.priority.title}
         price={reservation.price}
-        senderName={reservation.lawyer.name}
-        senderImage={reservation.lawyer.photo}
+        senderName={reservation.requesterLawyer.name}
+        senderImage={reservation.requesterLawyer.photo}
       />)}
       </div>: <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
         {clientsReservations?.map((reservation,index)=><RequestConsultationCard key={reservation.id}
         status={reservation.request_status}
-        title={reservation.advisory_services_id.title}
+        title={reservation.service.title}
         date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
         time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
-        importance={reservation.importance.title}
+        importance={reservation.priority.title}
         price={reservation.price}
-        senderName={reservation.lawyer.name}
-        senderImage={reservation.lawyer.photo}
+        senderName={reservation.requesterLawyer.name}
+        senderImage={reservation.requesterLawyer.photo}
       />)}
         </div>}
     </div>

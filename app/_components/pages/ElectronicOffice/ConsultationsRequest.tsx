@@ -1,6 +1,5 @@
 'use client'
 import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
-import RequestCleint from '@/app/_components/pages/ElectronicOffice/RequestCleint';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';

@@ -50,9 +50,15 @@ export const API_ENDPOINTS = {
 	LAWYER_ANALYTICS:'/lawyer/profile/analytics',
 	LAWYER_CLIENT:'lawyer/profile/clients',
 	LAWYER_WALLET:"lawyer/payouts/wallet",
-	ADVISORY_SERVICES_DIGITAL:"lawyer/advisory-services/requested/lawyer",
-	ADVISORY_SERVICES_CLIENT:"lawyer/advisory-services/requested/client",
+	ADVISORY_ADVISORY_DIGITAL:"lawyer/advisory-services/requested/lawyer",
+	ADVISORY_ADVISORY_CLIENT:"lawyer/advisory-services/requested/client",
 	ADVISORY_APPOINTMENTS_DIGITAL:"lawyer/reservations/lawyers",
-	ADVISORY_APPOINTMENTS_CLIENT:"lawyer/reservations/clients"
+	ADVISORY_APPOINTMENTS_CLIENT:"lawyer/reservations/clients",
+	ADVISORY_SERVICES_DIGITAL:"lawyer/services-request/requested/lawyer",
+	ADVISORY_SERVICES_CLIENT:"lawyer/services-request/requested/client",
+	ADVISORY_Advisory_Available:"lawyer/advisory-services/availableForPricing",
+	ADVISORY_Services_Available:"lawyer/services-request/getLawyerServicePrices",
+	ADVISORY_APPOINTMENTS_Available:'lawyer/reservations/types'
+
 };
 export const PROFILE_TYPE = 'profileType';

@@ -1,5 +1,6 @@
 'use client'
-import { getListAppointmentAvailableForPricing } from "@/app/_api/queries/office.query";
+ 
+import { getListServicesAvailableForPricing } from "@/app/_api/queries/office.query";
 import CustomizationCard from "@/app/_components/pages/ElectronicOffice/CustomizationCard";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import { useMutation } from "@tanstack/react-query";
@@ -10,13 +11,13 @@ import { useEffect, useState } from "react";
 function Page() {
   const [loading, setLoading] = useState<boolean>(false);  
   const [error, setError] = useState<string | null>(null);  
-  const [AppointmentAvailable, setAppointmentAvailable] = useState<any>(null);
-  const { mutate:fetchAppointmentAvailable  } = useMutation({
-    mutationFn: getListAppointmentAvailableForPricing,
+  const [ServicesAvailable, setServicesAvailable] = useState<any>(null);
+  const { mutate:fetchServicesAvailable  } = useMutation({
+    mutationFn: getListServicesAvailableForPricing,
     onSuccess: (res: any) => {
       if (res.status === 200) {
-        setAppointmentAvailable(res.data.data.reservationTypes);
-        console.log('Data fetched successfully',AppointmentAvailable);
+        setServicesAvailable(res.data.data);
+        console.log('Data fetched successfully',ServicesAvailable);
       } else {
         setError('حدث خطأ أثناء جلب البيانات');
         console.log('Error fetching data');
@@ -32,14 +33,14 @@ function Page() {
   });
   useEffect(() => {
     setLoading(true);
-    fetchAppointmentAvailable();
-  },[fetchAppointmentAvailable]);
+    fetchServicesAvailable();
+  },[fetchServicesAvailable]);
   return (
     <div className="container m-auto  min-h-screen">
       <SecondHead title="تخصيص المواعيد"/>
  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
   {
-   AppointmentAvailable?.map((advisory,index)=> <CustomizationCard key={advisory.id} title={advisory.name} active={advisory.is_activated} prices={advisory.lawyerPrices}  type={1} /> ) 
+   ServicesAvailable?.map((advisory,index)=> <CustomizationCard key={advisory.id} title={advisory.title} active={advisory.is_activated} prices={advisory.lawyerPrices}  type={1} /> ) 
   }
     </div>
 
