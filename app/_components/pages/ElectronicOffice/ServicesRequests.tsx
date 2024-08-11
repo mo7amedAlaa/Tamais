@@ -6,6 +6,7 @@ import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 type TabType =  string ;
 function ConsultationsRequests() {
   const [activeTab, setActiveTab] = useState<TabType>('Customers');
