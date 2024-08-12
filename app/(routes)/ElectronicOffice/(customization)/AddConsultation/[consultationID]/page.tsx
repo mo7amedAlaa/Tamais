@@ -1,11 +1,8 @@
+import ConsultationCustomizePage from '@/app/_components/pages/ElectronicOffice/ConsultationCustomizePage'
 import React from 'react'
 
 function page() {
-    return (
-        <div>
-            procatID
-        </div>
-    )
+    return <ConsultationCustomizePage />
 }
 
 export default page

@@ -48,3 +48,7 @@ export const getListServicesAvailableForPricing = async () => {
     const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_Services_Available);
     return { data, status };
 };
+export const replyTpConsultationFromClient = async (Form_Data:any) => {
+    const { data, status } = await defaultAPI.post(API_ENDPOINTS.ADVISORY_REPLY_CLIENT,Form_Data);
+    return { data, status };
+};

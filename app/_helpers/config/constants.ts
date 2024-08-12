@@ -58,7 +58,8 @@ export const API_ENDPOINTS = {
 	ADVISORY_SERVICES_CLIENT:"lawyer/services-request/requested/client",
 	ADVISORY_Advisory_Available:"lawyer/advisory-services/availableForPricing",
 	ADVISORY_Services_Available:"lawyer/services-request/getLawyerServicePrices",
-	ADVISORY_APPOINTMENTS_Available:'lawyer/reservations/types'
+	ADVISORY_APPOINTMENTS_Available:'lawyer/reservations/types',
+	ADVISORY_REPLY_CLIENT:'lawyer/advisory-services/requested/reply/client'
 
 };
 export const PROFILE_TYPE = 'profileType';

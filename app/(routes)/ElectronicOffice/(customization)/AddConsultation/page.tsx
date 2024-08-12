@@ -3,6 +3,7 @@ import { getListAdvisoryAvailableForPricing } from "@/app/_api/queries/office.qu
 import CustomizationCard from "@/app/_components/pages/ElectronicOffice/CustomizationCard";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 function Page() {
@@ -37,9 +38,9 @@ function Page() {
       <SecondHead title="تخصيص الاستشارات" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
         {
-          AdvisoryAvailable?.map(advisory => <div key={advisory.id}>
+          AdvisoryAvailable?.map(advisory => <Link href={`/ElectronicOffice/AddConsultation/${advisory.id}`} key={advisory.id}>
             <CustomizationCard title={advisory.types[0].title} active={advisory.types[0].is_activated} prices={advisory.types[0].lawyerPrices} type={1} />
-          </div>)
+          </Link>)
         }
 
       </div>

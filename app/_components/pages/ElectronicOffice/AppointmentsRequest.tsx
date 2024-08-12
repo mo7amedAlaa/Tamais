@@ -4,6 +4,7 @@ import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/Re
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
 import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 type TabType = string;
@@ -75,27 +76,33 @@ function ConsultationsRequests() {
       {activeTab === 'DigitalGuide' ?
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
 
-          {digitalReservations?.map((reservation, index) => <RequestConsultationCard key={reservation.id}
-            status={reservation.request_status}
-            title={reservation.reservationType.name}
-            date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-            time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
-            importance={reservation.reservationImportance.name}
-            price={reservation.price}
-            senderName={reservation.reservedFromLawyer.name}
-            senderImage={reservation.reservedFromLawyer.photo}
-          />)}
+          {digitalReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/appointmentsRequest/${reservation.id}`} key={reservation.id}>
+            <RequestConsultationCard
+              status={reservation.request_status}
+              title={reservation.reservationType.name}
+              date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+              time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
+              importance={reservation.reservationImportance.name}
+              price={reservation.price}
+              senderName={reservation.reservedFromLawyer.name}
+              senderImage={reservation.reservedFromLawyer.photo}
+            />
+
+          </Link>
+          )}
         </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-          {clientsReservations?.map((reservation, index) => <RequestConsultationCard key={reservation.id}
-            status={reservation.request_status}
-            title={reservation.reservationType.name}
-            date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-            time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
-            importance={reservation.reservationImportance.name}
-            price={reservation.price}
-            senderName={reservation.reservedFromLawyer.name}
-            senderImage={reservation.reservedFromLawyer.photo}
-          />)}
+          {clientsReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/appointmentsRequest/${reservation.id}`} key={reservation.id}>
+            <RequestConsultationCard
+              status={reservation.request_status}
+              title={reservation.reservationType.name}
+              date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+              time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
+              importance={reservation.reservationImportance.name}
+              price={reservation.price}
+              senderName={reservation.reservedFromLawyer.name}
+              senderImage={reservation.reservedFromLawyer.photo}
+            />
+          </Link>)}
         </div>}
     </div>
   )

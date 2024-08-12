@@ -28,7 +28,7 @@ function CustomizationCard({ active, title, prices, type }: ServiceCardProps) {
     };
 
     return (
-        <div className="p-6 w-full h-52 bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px] ">
+        <div className="p-6 w-full   bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px] ">
             <div className="mt-2 flex justify-between items-center font-[700] text-right">
                 <span className="text-blue-500 font-bold flex gap-3 text-[#00262F]">{title}</span>
                 <button
