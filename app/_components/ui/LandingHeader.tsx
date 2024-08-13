@@ -1,32 +1,28 @@
 'use client';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { GoHomeFill } from 'react-icons/go';
-import { FaUser } from 'react-icons/fa';
-import { FaUsers } from 'react-icons/fa';
-import { MdAccountBalanceWallet } from 'react-icons/md';
-import { FaRegBell } from 'react-icons/fa';
-import { MdSlowMotionVideo } from 'react-icons/md';
-import { FaBalanceScale } from 'react-icons/fa';
-import { LuLogOut } from 'react-icons/lu';
-import { IoBook } from 'react-icons/io5';
-import Link from 'next/link';
-import { FaBars, FaChevronDown, FaChevronUp } from 'react-icons/fa6';
-import { useRouter } from 'next/navigation';
+import { ACCESS_TOKEN, LandingSections, PROFILE_TYPE } from '@/app/_helpers/config/constants';
 import useUserProfile from '@/app/_helpers/hooks/useUserProfile';
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN, PROFILE_TYPE } from '@/app/_helpers/config/constants';
 import { useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { FaBalanceScale, FaBars, FaChevronDown, FaChevronUp, FaRegBell } from 'react-icons/fa';
+import { IoBook } from 'react-icons/io5';
+import { LuLogOut } from 'react-icons/lu';
+import { MdSlowMotionVideo } from 'react-icons/md';
+
 const LandingHeader = () => {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const { data, isLoading, isError } = useUserProfile();
+	const { data } = useUserProfile();
 	const router = useRouter();
 	const queryClient = useQueryClient();
 
 	const toggleDropdown = () => {
 		setIsDropdownOpen(!isDropdownOpen);
 	};
+
 	function signOut() {
 		localStorage.removeItem(PROFILE_TYPE);
 		localStorage.removeItem(ACCESS_TOKEN);
@@ -39,11 +35,12 @@ const LandingHeader = () => {
 	const scrollToSection = (id: LandingSections) => {
 		const section = document.getElementById(id);
 		if (section) {
-			section.scrollIntoView({ behavior: 'smooth' });
+			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
 	};
+
 	return (
-		<nav className="absolute [background:radial-gradient(50%_50%_at_50%_50%,_#033d4a,_#00262f)] w-full  z-40 shadow ">
+		<nav className="absolute bg-gradient-to-br from-[#033d4a] to-[#00262f] w-full z-40 shadow">
 			<div className="container px-6 py-4 mx-auto">
 				<div className="lg:flex lg:items-center lg:justify-between">
 					<div className="flex items-center justify-between">
@@ -57,12 +54,11 @@ const LandingHeader = () => {
 							/>
 						</a>
 
-						{/* Mobile menu button */}
 						<div className="flex lg:hidden">
 							<button
 								onClick={() => setIsOpen(!isOpen)}
 								type="button"
-								className="text-white focus:outline-none focus:text-gray-600 "
+								className="text-white focus:outline-none"
 								aria-label="toggle menu"
 							>
 								{!isOpen ? (
@@ -87,48 +83,39 @@ const LandingHeader = () => {
 						</div>
 					</div>
 
-					{/* Mobile Menu open: "block", Menu closed: "hidden" */}
 					<div
-						className={`${
-							isOpen ? 'opacity-100 translate-x-0' : 'hidden'
-						}  inset-x-0 z-20 px-6 py-4 transition-all duration-300 ease-in-out mt-5 bg-transparent lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center`}
+						className={`fixed inset-x-0 z-20 px-6 py-4 transition-all duration-300 ease-in-out mt-5 bg-transparent lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
 					>
 						<div className="flex text-white flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
 							<div
-								onClick={() =>
-									scrollToSection(LandingSections.ABOUTUS)
-								}
-								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+								onClick={() => scrollToSection(LandingSections.ABOUTUS)}
+								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								من نحن
 							</div>
 
 							<div
-								onClick={() =>
-									scrollToSection(LandingSections.MAIN)
-								}
-								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+								onClick={() => scrollToSection(LandingSections.MAIN)}
+								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								الرئيسية
 							</div>
 							<div
-								onClick={() =>
-									scrollToSection(LandingSections.PLANS)
-								}
-								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+								onClick={() => scrollToSection(LandingSections.PLANS)}
+								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								الباقات الاشتراكات
 							</div>
 							<Link
 								href="/contact-us"
-								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0"
 							>
 								اتصل بنا
 							</Link>
 						</div>
 					</div>
 
-					<div className=" hidden text-white gap-5 lg:flex items-center mt-4 lg:mt-0">
+					<div className="hidden text-white gap-5 lg:flex items-center mt-4 lg:mt-0">
 						{data ? (
 							<>
 								<button
@@ -137,22 +124,15 @@ const LandingHeader = () => {
 									aria-label="toggle profile dropdown"
 									onClick={toggleDropdown}
 								>
-									<span className="ml-2 ">
-										{isDropdownOpen ? (
-											<FaChevronUp />
-										) : (
-											<FaChevronDown />
-										)}
+									<span className="ml-2">
+										{isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
 									</span>
 									<div className="w-8 h-8 overflow-hidden rounded-full">
 										<Image
-											src={
-												(data?.image as string) ||
-												(data?.photo as string)
-											}
+											src={(data?.image as string) || (data?.photo as string)}
 											className="object-cover w-full h-full"
 											width={50}
-											height={150}
+											height={50}
 											alt="avatar"
 										/>
 									</div>
@@ -166,57 +146,46 @@ const LandingHeader = () => {
 									<div className="absolute top-15 left-20 bg-white text-black mt-2 p-2 rounded shadow-lg">
 										<Link
 											href="/homePage/profile"
-											className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+											className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-300 transform hover:bg-gray-100"
 										>
 											<Image
 												className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9"
-												src={
-													(data?.image as string) ||
-													(data?.photo as string)
-												}
+												src={(data?.image as string) || (data?.photo as string)}
 												alt="avatar"
 												width={50}
 												height={50}
 											/>
 											<div className="mx-1">
-												<h1 className="text-sm font-semibold ">
-													{data?.name as string}
-												</h1>
-												<p className="text-sm text-gray ">
-													{data?.email as string}
-												</p>
+												<h1 className="text-sm font-semibold">{data?.name as string}</h1>
+												<p className="text-sm text-gray">{data?.email as string}</p>
 											</div>
 										</Link>
 
 										<hr className="border-slate-100" />
 										<Link
 											href="#"
-											className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+											className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] gap-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md"
 										>
-											<FaBalanceScale size="18px" />{' '}
-											المكتب الالكتروني
+											<FaBalanceScale size="18px" /> المكتب الالكتروني
 										</Link>
 										<Link
 											href="#"
-											className="px-3 py-2 flex items-center hover:text-[#658D96] text-[#405B61] text-[12px] font-[600] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+											className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] gap-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md"
 										>
-											<MdSlowMotionVideo size="18px" />{' '}
-											منصة التدريب
+											<MdSlowMotionVideo size="18px" /> منصة التدريب
 										</Link>
 										<Link
 											href="#"
-											className="px-3 py-2 flex items-center hover:text-[#658D96] text-[#405B61] text-[12px] font-[600] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+											className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] gap-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md"
 										>
-											<IoBook size="18px" /> المكتبة
-											والانظمة
+											<IoBook size="18px" /> المكتبة والانظمة
 										</Link>
 										<hr className="border-slate-100" />
 										<div
 											onClick={signOut}
-											className="px-3 py-4 flex items-center hover:text-[#658D96] hover:cursor-pointer hover:underline-offset-[3px] text-[#405B61] text-[12px] font-[600]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+											className="px-3 py-4 flex items-center hover:text-[#658D96] cursor-pointer text-[#405B61] text-[12px] font-[600] gap-2 mx-3 mt-2 transition-colors duration-300 transform rounded-md"
 										>
-											<LuLogOut size="18px" /> تسجيل
-											الخروج
+											<LuLogOut size="18px" /> تسجيل الخروج
 										</div>
 									</div>
 								)}

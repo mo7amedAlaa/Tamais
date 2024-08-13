@@ -77,12 +77,12 @@ function ConsultationsRequests() {
       {activeTab === 'DigitalGuide' ?
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
 
-          {digitalReservations?.map((reservation, index) => <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/${reservation.id}`} >
+          {digitalReservations?.map((reservation, index) => <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/Reply_Lawyer_Service/${reservation.id}`} >
             <RequestConsultationCard
               status={reservation.request_status}
               title={reservation.service.title}
               date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-              time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
+              time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
               importance={reservation.priority.title}
               price={reservation.price}
               senderName={reservation.requesterLawyer.name}
@@ -90,7 +90,7 @@ function ConsultationsRequests() {
             />
           </Link>)}
         </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-          {clientsReservations?.map((reservation, index) => <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/${reservation.id}`}>
+          {clientsReservations?.map((reservation, index) => <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/Reply_Client_Service/${reservation.id}`}>
             <RequestConsultationCard
               status={reservation.request_status}
               title={reservation.service.title}
@@ -98,8 +98,8 @@ function ConsultationsRequests() {
               time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
               importance={reservation.priority.title}
               price={reservation.price}
-              senderName={reservation.requesterLawyer.name}
-              senderImage={reservation.requesterLawyer.photo}
+              senderName={reservation.lawyer.name}
+              senderImage={reservation.lawyer.photo}
             />
           </Link>)}
         </div>}

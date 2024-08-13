@@ -1,9 +1,10 @@
 'use client'
 import { useState } from "react";
 import { TiTick } from "react-icons/ti";
-const Stepper = () => {
+const Stepper = ({ status }) => {
     const steps = ["قيد النتظار", "قيد الدراسة", "مكتملة"];
-    const [currentStep, setCurrentStep] = useState(2);
+    const stnum = Number(status)
+    const [currentStep, setCurrentStep] = useState(stnum);
     const [complete, setComplete] = useState(false);
     return (
         <>

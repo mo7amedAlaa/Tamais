@@ -41,7 +41,7 @@ function Page() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
         {
           AppointmentAvailable?.map((advisory, index) => <div key={advisory.id}>
-            <CustomizationCard title={advisory.name} active={advisory.is_activated} prices={advisory.lawyerPrices} type={2} />
+            <CustomizationCard title={advisory.name} active={advisory.is_activated} prices={advisory.lawyerPrices} type={2} link={`/ElectronicOffice/AddSchedules/${advisory.id}`} />
           </div>)
         }
       </div>

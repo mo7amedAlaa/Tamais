@@ -1,16 +1,13 @@
 'use client';
 
-import { deleteConsultation } from "@/app/_api/queries/office.query";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import deleteIcon from '@/public/Icons/delete.svg';
 import showIcon from '@/public/Icons/show.svg';
-import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import Swal from 'sweetalert2';
 
-function ConsultationCustomizePage({ params }) {
+function ServiceCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [toggleStates, setToggleStates] = useState({
@@ -19,12 +16,7 @@ function ConsultationCustomizePage({ params }) {
         important: false,
         veryImportant: false,
     });
-    const labels = {
-        normal: "عادي",
-        medium: "متوسط الأهمية",
-        important: "مهم",
-        veryImportant: "مهم جداً"
-    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submitting data:", toggleStates);
@@ -59,33 +51,12 @@ function ConsultationCustomizePage({ params }) {
             }
         });
     };
-    const mutation = useMutation({
-        mutationFn: deleteConsultation,
-        onMutate: () => {
-            setLoading(true);
-            setError(null);
-        },
-        onSuccess: (res: any) => {
-            if (res.status === 200) {
-                toast.success('تم حذف المنتج بنجاح');
-                setError(null);
-            } else {
-                setError('حدث خطأ أثناء حذف المنتج ');
-            }
-            setLoading(false);
-        },
-        onError: (error: any) => {
-            toast.error('حدث خطأ أثناء حذف المنتج');
-            console.log('Error:', error);
-            setLoading(false);
-        },
-    });
+
     const handleDeleteProduct = () => {
-        const id = params?.consultationID
         Swal.fire({
             title: "حذف المنتج!",
             text: " اذا تم حذف المنتج لن تكون قادر على استرجاعها مره اخري",
-            icon: 'danger',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#E52F4F',
             cancelButtonColor: '#e3e3e3',
@@ -93,19 +64,22 @@ function ConsultationCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                mutation.mutate(id);
-                {
-                    !Error && Swal.fire(
-                        'تم!',
-                        'تم حذف المنتج.',
-                        'success'
-                    );
-                }
+                Swal.fire(
+                    'تم!',
+                    'تم حذف المنتج.',
+                    'success'
+                );
+                // منطق لحذف المنتج هنا
             }
         });
     };
 
-
+    const labels = {
+        normal: "عادي",
+        medium: "متوسط الأهمية",
+        important: "مهم",
+        veryImportant: "مهم جداً"
+    };
 
     return (
         <div className="container mx-auto min-h-screen">
@@ -125,11 +99,11 @@ function ConsultationCustomizePage({ params }) {
                     <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
                         <div className="flex items-center gap-3">
                             <Image src={showIcon} alt='showicon' width={40} height={40} />
-                            <button onClick={handleDisableProduct} className="text-blue-600">{loading ? "جاري تعطيل المنتج" : "تعطيل المنتج"}</button>
+                            <button onClick={handleDisableProduct} className="text-blue-600">تعطيل المنتج</button>
                         </div>
                         <div className="flex items-center gap-3">
                             <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
-                            <button onClick={handleDeleteProduct} className="text-red-600">{loading ? "جاري حذف المنتج" : "حذف المنتج"}</button>
+                            <button onClick={handleDeleteProduct} className="text-red-600">حذف المنتج</button>
                         </div>
                     </div>
                 </div>
@@ -169,4 +143,4 @@ function ConsultationCustomizePage({ params }) {
     );
 }
 
-export default ConsultationCustomizePage;
+export default ServiceCustomizePage;

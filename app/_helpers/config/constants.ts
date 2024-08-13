@@ -59,7 +59,19 @@ export const API_ENDPOINTS = {
 	ADVISORY_Advisory_Available:"lawyer/advisory-services/availableForPricing",
 	ADVISORY_Services_Available:"lawyer/services-request/getLawyerServicePrices",
 	ADVISORY_APPOINTMENTS_Available:'lawyer/reservations/types',
-	ADVISORY_REPLY_CLIENT:'lawyer/advisory-services/requested/reply/client'
+	ADVISORY_REPLY_CLIENT:'lawyer/advisory-services/requested/reply/client',
+	SERVICE_REPLY_CLIENT:'lawyer/services-request/requested/client/reply',
+	APPOINT_REPLY_CLIENT:'lawyer/advisory-services/requested/reply/client',
+	ADVISORY_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/lawyer',
+	SERVICE_REPLY_Lawyer:'lawyer/services-request/requested/lawyer/reply',
+	APPOINT_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/client'
+	 
 
 };
 export const PROFILE_TYPE = 'profileType';
+export const  LandingSections ={
+  ABOUTUS : "about-us",
+  MAIN : "main",
+  PLANS : "plans",
+  SYSTEMS : "systems",
+}

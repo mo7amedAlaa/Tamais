@@ -77,7 +77,7 @@ function ConsultationsRequests() {
       {activeTab === 'DigitalGuide' ?
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
 
-          {digitalReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/${reservation.id}`} key={reservation.id}>
+          {digitalReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/Reply_Lawyer_Consultations/${reservation.id}`} key={reservation.id}>
             <RequestConsultationCard
               status={reservation.request_status}
               title={reservation.advisory_services_id.title}
@@ -90,12 +90,12 @@ function ConsultationsRequests() {
             />
           </Link>)}
         </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-          {clientsReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/${reservation.id}`} key={reservation.id}>
+          {clientsReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/Reply_Cleint_Consultations/${reservation.id}`} key={reservation.id}>
             <RequestConsultationCard
               status={reservation.request_status}
               title={reservation.advisory_services_id.title}
+              time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
               date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-              time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
               importance={reservation.importance.title}
               price={reservation.price}
               senderName={reservation.lawyer.name}
