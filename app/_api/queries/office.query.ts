@@ -92,7 +92,7 @@ export const changeService = async (id:any) => {
     const { data, status } = await   defaultAPI.post(`lawyer/services-request/:${id}`);
     return { data, status };
 };
-export const changeAppointment = async () => {
+export const changeAppointment = async (id:any) => {
     const { data, status } = await defaultAPI.post(`lawyer/reservations/:${id}`);
     return { data, status };
 };
