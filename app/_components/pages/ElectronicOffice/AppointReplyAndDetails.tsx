@@ -174,7 +174,7 @@ const AppointReplyAndDetails: React.FC<PropsIN> = ({ appointID }) => {
                     </div>
                     <div>
                         <h3 className="m-3 text-[#A6A4A4]">تفاصيل الرد على الاستشارة</h3>
-                        <Steps />
+                        <Steps status={currentStep} />
                         <div className="h-[60px] bg-[#FFFFFF] px-6 rounded-xl shadow-xl flex justify-between items-center">
                             <div className="flex gap-2 items-center">
                                 <Image src={pdfIcon} alt='pdfImage' />
