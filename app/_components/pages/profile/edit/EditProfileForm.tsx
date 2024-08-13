@@ -226,8 +226,7 @@ function EditProfileForm() {
 		console.log(profile);
 		setName(profile?.name ? profile?.name : '');
 		setMobile(
-			`+${profile?.phone_code}${
-				profile.mobile ? profile.mobile : profile.phone
+			`+${profile?.phone_code}${profile.mobile ? profile.mobile : profile.phone
 			}`
 		);
 		setEmail(profile?.email ? profile?.email : '');
@@ -246,8 +245,8 @@ function EditProfileForm() {
 			profile?.['gender ']
 				? profile?.['gender '].toString()
 				: profile?.gender
-				? profile?.gender
-				: ''
+					? profile?.gender
+					: ''
 		);
 		if (profileType == UserTypes.LAWYER) {
 			setFirstName(profile?.first_name ? profile.first_name : '');
@@ -420,10 +419,10 @@ function EditProfileForm() {
 			console.log(latitude, longitude);
 			setMapsLink(
 				'https://maps.google.com/maps?q=' +
-					latitude +
-					',' +
-					longitude +
-					'&hl=es;z=14&output=embed'
+				latitude +
+				',' +
+				longitude +
+				'&hl=es;z=14&output=embed'
 			);
 		}
 	}, [latitude, longitude]);
@@ -1058,7 +1057,7 @@ function EditProfileForm() {
 											</div>
 											<div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
 												{selectedType == '5' ||
-												selectedType == '4' ? (
+													selectedType == '4' ? (
 													<div className="w-full xl:w-1/2">
 														<label className="mb-2.5 block text-black ">
 															اسم ومعلومات الجهة :{' '}
@@ -1084,7 +1083,7 @@ function EditProfileForm() {
 														)}
 													</div>
 												) : selectedType == '2' ||
-												  selectedType == '3' ? (
+													selectedType == '3' ? (
 													<>
 														<div className="w-full xl:w-1/2">
 															<label className="mb-2.5 block text-black ">
@@ -1457,13 +1456,13 @@ function EditProfileForm() {
 																	.value
 																	.length > 10
 																	? (e.currentTarget.value =
-																			e.currentTarget.value.slice(
-																				0,
-																				10
-																			))
+																		e.currentTarget.value.slice(
+																			0,
+																			10
+																		))
 																	: e
-																			.currentTarget
-																			.value;
+																		.currentTarget
+																		.value;
 															}
 														}}
 														placeholder="أدخل الرقم ..."
@@ -1604,7 +1603,7 @@ function EditProfileForm() {
 													<div className="flex flex-col gap-2">
 														<div className="flex gap-2">
 															{degree != '' &&
-															profile?.degree_certificate ? (
+																profile?.degree_certificate ? (
 																<>
 																	<a
 																		href={
@@ -1722,9 +1721,9 @@ function EditProfileForm() {
 																		'غير معروف'
 																	)}
 																	{section.section &&
-																	section
-																		.section
-																		.need_license ==
+																		section
+																			.section
+																			.need_license ==
 																		1 ? (
 																		<td className="text-center px-4 py-2 border border-gray-300 h-full">
 																			تحتاج
@@ -1805,36 +1804,36 @@ function EditProfileForm() {
 																)
 																	?.need_license ==
 																	1 && (
-																	<div className="flex flex-col md:flex-row  items-center gap-6">
-																		<div className="flex flex-col w-1/2">
-																			<label className="mb-2.5">
-																				الترخيص
-																			</label>
-																			<input
-																				type="number"
-																				placeholder="الترخيص"
-																				className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter "
-																				value={
-																					section.sectionLicenseNo
-																				}
-																				disabled={
-																					true
-																				}
-																			/>
+																		<div className="flex flex-col md:flex-row  items-center gap-6">
+																			<div className="flex flex-col w-1/2">
+																				<label className="mb-2.5">
+																					الترخيص
+																				</label>
+																				<input
+																					type="number"
+																					placeholder="الترخيص"
+																					className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter "
+																					value={
+																						section.sectionLicenseNo
+																					}
+																					disabled={
+																						true
+																					}
+																				/>
+																			</div>
+																			<div className="flex flex-col w-1/2">
+																				<label className="mb-2.5">
+																					ملف
+																					الترخيص
+																				</label>
+																				<p>
+																					تم
+																					رفع
+																					الملف
+																				</p>
+																			</div>
 																		</div>
-																		<div className="flex flex-col w-1/2">
-																			<label className="mb-2.5">
-																				ملف
-																				الترخيص
-																			</label>
-																			<p>
-																				تم
-																				رفع
-																				الملف
-																			</p>
-																		</div>
-																	</div>
-																)}
+																	)}
 																<button
 																	className={`bg-red-500 p-2 mt-3.5 text-white`}
 																	onClick={() => {
@@ -1854,15 +1853,15 @@ function EditProfileForm() {
 																			(
 																				prev
 																			) => [
-																				...prev,
-																				sections.find(
-																					(
-																						sec
-																					) =>
-																						sec.id.toString() ==
-																						section.section_id
-																				),
-																			]
+																					...prev,
+																					sections.find(
+																						(
+																							sec
+																						) =>
+																							sec.id.toString() ==
+																							section.section_id
+																					),
+																				]
 																		);
 																	}}
 																>
@@ -1893,52 +1892,52 @@ function EditProfileForm() {
 															section.id.toString() ==
 															selectedSection
 													)?.need_license == 1 && (
-														<div className="flex flex-col md:flex-row  items-center gap-6">
-															<div className="flex flex-col w-1/2">
-																<label className="mb-2.5">
-																	الترخيص
-																</label>
-																<input
-																	type="number"
-																	placeholder="الترخيص"
-																	className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter "
-																	value={
-																		sectionLicenseNo
-																	}
-																	onChange={(
-																		e
-																	) => {
-																		setSectionLicenseNo(
+															<div className="flex flex-col md:flex-row  items-center gap-6">
+																<div className="flex flex-col w-1/2">
+																	<label className="mb-2.5">
+																		الترخيص
+																	</label>
+																	<input
+																		type="number"
+																		placeholder="الترخيص"
+																		className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter "
+																		value={
+																			sectionLicenseNo
+																		}
+																		onChange={(
 																			e
-																				.target
-																				.value
-																		);
-																	}}
-																/>
+																		) => {
+																			setSectionLicenseNo(
+																				e
+																					.target
+																					.value
+																			);
+																		}}
+																	/>
+																</div>
+																<div className="flex flex-col w-1/2">
+																	<label className="mb-2.5">
+																		ملف الترخيص
+																	</label>
+																	<input
+																		type="file"
+																		accept=".png ,.jpg ,.jpeg ,.PNG ,.JPG, .JPEG, .pdf"
+																		onChange={(
+																			e
+																		) =>
+																			handleFileChange(
+																				e,
+																				setSectionLicenseFile
+																			)
+																		}
+																	/>
+																</div>
 															</div>
-															<div className="flex flex-col w-1/2">
-																<label className="mb-2.5">
-																	ملف الترخيص
-																</label>
-																<input
-																	type="file"
-																	accept=".png ,.jpg ,.jpeg ,.PNG ,.JPG, .JPEG, .pdf"
-																	onChange={(
-																		e
-																	) =>
-																		handleFileChange(
-																			e,
-																			setSectionLicenseFile
-																		)
-																	}
-																/>
-															</div>
-														</div>
-													)}
+														)}
 													<button
 														disabled={
 															selectedSection ==
-																'' ||
+															'' ||
 															(avilableSections.find(
 																(section) =>
 																	section.id.toString() ==
@@ -1948,7 +1947,7 @@ function EditProfileForm() {
 																(sectionLicenseNo.trim() ==
 																	'' ||
 																	sectionLicenseFile ==
-																		null))
+																	null))
 														}
 														className={`bg-gold p-2 mt-3.5 text-white`}
 														onClick={() => {

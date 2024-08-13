@@ -1,26 +1,16 @@
 'use client';
+import { shortLawyer } from '@/app/_api/interfaces/Profile';
+import { getNewAdvisories } from '@/app/_api/queries/home.query';
 import { Card } from '@/app/_components/pages/home/Card';
-import CompaniesSectionSwiper from '@/app/_components/pages/home/CompaniesSectionSwiper';
 import HeaderParagraph from '@/app/_components/pages/home/HeaderParagraph';
-import HelperSystemsSection from '@/app/_components/pages/home/HelperSystemsSection';
-import NewCommerceSection from '@/app/_components/pages/home/NewCommerceSection';
 import ScrollingLogos from '@/app/_components/pages/home/ScrollingLogos';
-import SectionWithoutGoldCard from '@/app/_components/pages/home/SectionWithoutGoldCard';
-import SectionWithoutGoldCard2 from '@/app/_components/pages/home/SectionWithoutGoldCard2';
-import Header from '@/app/_components/pages/home/header/Header';
-import ServicesSection from '@/app/_components/pages/home/servicesSection/ServicesSection';
-import ServicesSection2 from '@/app/_components/pages/home/servicesSection/ServicesSection2';
-import ServicesSection3 from '@/app/_components/pages/home/servicesSection/ServicesSection3';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import 'swiper/css';
-import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 import { FreeMode, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useQuery } from '@tanstack/react-query';
-import { UserProfileResponse } from '@/app/_api/interfaces/UserProfileResponse';
-import { getNewAdvisories } from '@/app/_api/queries/home.query';
-import { shortLawyer } from '@/app/_api/interfaces/Profile';
 
 export default function Home() {
 	const { data, isLoading, isError } = useQuery<shortLawyer[]>({
@@ -298,7 +288,7 @@ export default function Home() {
 							</div>
 						</SwiperSlide>
 						<SwiperSlide>
-							<div className="flex flex-col items-center justify-center gap-6 group relative shadow-lg rounded-xl px-6 py-8 w-[350px] lg:w-[350px]">
+							<div className="flex flex-col items-center justify-center gap-6 group relative shadow-lg rounded-xl px-6 py-8 w-[350px] lg:w-[350px]" id='plans'>
 								<div className="flex flex-col font-bold">
 									<p>الباقة الشاملة</p>
 									{/* <p>400 ر.س / شهر</p> */}

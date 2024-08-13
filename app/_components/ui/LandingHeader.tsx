@@ -1,5 +1,5 @@
 'use client';
-import { ACCESS_TOKEN, LandingSections, PROFILE_TYPE } from '@/app/_helpers/config/constants';
+import { ACCESS_TOKEN, PROFILE_TYPE } from '@/app/_helpers/config/constants';
 import useUserProfile from '@/app/_helpers/hooks/useUserProfile';
 import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
@@ -32,10 +32,10 @@ const LandingHeader = () => {
 		router.push('/auth/signin');
 	}
 
-	const scrollToSection = (id: LandingSections) => {
+	const scrollToSection = (id: string) => {
 		const section = document.getElementById(id);
 		if (section) {
-			section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			section.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
 
@@ -88,20 +88,20 @@ const LandingHeader = () => {
 					>
 						<div className="flex text-white flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
 							<div
-								onClick={() => scrollToSection(LandingSections.ABOUTUS)}
+								onClick={() => scrollToSection("about-us")}
 								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								من نحن
 							</div>
 
 							<div
-								onClick={() => scrollToSection(LandingSections.MAIN)}
+								onClick={() => scrollToSection("main")}
 								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								الرئيسية
 							</div>
 							<div
-								onClick={() => scrollToSection(LandingSections.PLANS)}
+								onClick={() => scrollToSection('plans')}
 								className="px-3 py-2 flex items-center hover:text-[#658D96] hover:underline-offset-[3px] gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 cursor-pointer"
 							>
 								الباقات الاشتراكات
