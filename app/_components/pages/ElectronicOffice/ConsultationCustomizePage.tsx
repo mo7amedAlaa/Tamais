@@ -85,7 +85,7 @@ function ConsultationCustomizePage({ params }) {
         Swal.fire({
             title: "حذف المنتج!",
             text: " اذا تم حذف المنتج لن تكون قادر على استرجاعها مره اخري",
-            icon: 'danger',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#E52F4F',
             cancelButtonColor: '#e3e3e3',
