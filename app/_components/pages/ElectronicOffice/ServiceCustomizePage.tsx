@@ -1,36 +1,157 @@
 'use client';
-
+import { changeServiceDis, changeServiceEn, createPriceService, deleteService, getListServicesAvailableForPricing } from "@/app/_api/queries/office.query";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import deleteIcon from '@/public/Icons/delete.svg';
 import showIcon from '@/public/Icons/show.svg';
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import Swal from 'sweetalert2';
 
 function ServiceCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [toggleStates, setToggleStates] = useState({
-        normal: false,
-        medium: false,
-        important: false,
-        veryImportant: false,
-    });
+    const [servicesAvailable, setServicesAvailable] = useState<any>(null);
+    const [serviceAvailable, setServiceAvailable] = useState<any>(null);
+    const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
+    const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
 
+    const { mutate: fetchServicesAvailable } = useMutation({
+        mutationFn: getListServicesAvailableForPricing,
+        onMutate: () => {
+            setLoading(true)
+        },
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                const data = res.data.data;
+                setServicesAvailable(data);
+                const service = data.find(item => item.id == params.servID);
+                setServiceAvailable(service);
+                const initialVisibility = service?.ymtaz_levels_prices.reduce((acc, price) => {
+                    acc[price.id] = price.isHidden === 0;
+                    return acc;
+                }, {} as { [key: string]: boolean });
+                setVisibility(initialVisibility);
+                console.log('Data fetched successfully', data);
+            } else {
+                setError('حدث خطأ أثناء جلب البيانات');
+                console.log('Error fetching data');
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            setError('حدث خطأ أثناء جلب البيانات');
+            toast.error('حدث خطأ أثناء جلب البيانات');
+            console.log('Error:', error);
+            setLoading(false);
+        },
+    });
+    useEffect(() => {
+        setLoading(true);
+        fetchServicesAvailable();
+    }, []);
+    const { mutate: createListPrice } = useMutation({
+        mutationFn: createPriceService,
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                fetchServicesAvailable()
+                toast.success('تم التسعير بنجاح')
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            setError('حدث خطأ أثناء  التسعير  ');
+            toast.error('حدث خطأ أثناء  التسعير:');
+            console.log('Error:', error);
+            setLoading(false);
+        },
+    });
+    const { mutate: enableProduct } = useMutation({
+        mutationFn: changeServiceEn,
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                fetchServicesAvailable()
+                toast.success('تم تفعيل المنتج  ')
+            } else {
+                setError('حدث خطأ تفعيل أثناء المنتج  ');
+                console.log('Error fetching data');
+
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            setError('حدث خطأ أثناء تفعيل المنتج  ');
+            toast.error('حدث خطأ أثناء تفعيل المنتج  ');
+            console.log('Error:', error);
+            setLoading(false);
+        },
+    });
+    const { mutate: disableProduct } = useMutation({
+        mutationFn: changeServiceDis,
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                fetchServicesAvailable()
+                toast.success('تم تعطيل المنتج  ')
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            setError('حدث خطأ أثناء تعطيل المنتج');
+            toast.error('حدث خطأ أثناء تعطيل المنتج');
+            console.log('Error:', error);
+            setLoading(false);
+        },
+    });
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Submitting data:", toggleStates);
-        // منطق استدعاء API هنا
+        const formData = new FormData();
+        formData.append('service_id', params.servID);
+        serviceAvailable?.ymtaz_levels_prices?.forEach(price => {
+            formData.append(`importance[${price.id}][id]`, price.level.id);
+            formData.append(`importance[${price.id}][price]`, inputValues[price.id] || price.price);
+            formData.append(`importance[${price.id}][isHidden]`, (visibility[`${price.id}`] ? 1 : 0).toString());
+        });
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+        createListPrice(formData)
     };
 
-    const handleClick = (key) => {
-        setToggleStates(prevState => ({
-            ...prevState,
-            [key]: !prevState[key],
+    const handleInputChange = (id, value) => {
+        setInputValues((prevValues) => ({
+            ...prevValues, [id]: value
+        }))
+    }
+    const handleClick = (e, id) => {
+        e.preventDefault();
+        setVisibility(prev => ({
+            ...prev,
+            [id]: !prev[id]
         }));
+        console.log(visibility)
     };
 
+    const handleEnableProduct = () => {
+        const id = params.servID
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "هل تريد تفعيل المنتج؟",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم، تفعيل!',
+            cancelButtonText: 'إلغاء',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                enableProduct(id);
+                fetchServicesAvailable();
+            }
+        });
+    };
     const handleDisableProduct = () => {
+        const id = params.servID
         Swal.fire({
             title: 'هل أنت متأكد؟',
             text: "هل تريد تعطيل المنتج؟",
@@ -42,17 +163,35 @@ function ServiceCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'تم!',
-                    'تم تعطيل المنتج.',
-                    'success'
-                );
-                // منطق لتعطيل المنتج هنا
+                disableProduct(id);
+                fetchServicesAvailable();
             }
         });
     };
 
+    const { mutate: deleteProduct } = useMutation({
+        mutationFn: deleteService,
+        onMutate: () => {
+            setLoading(true);
+            setError(null);
+        },
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                fetchServicesAvailable()
+                toast.success('تم حذف المنتج بنجاح');
+                setError(null);
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            toast.error('حدث خطأ أثناء حذف المنتج');
+            console.log('Error:', error);
+            setLoading(false);
+        },
+    });
+
     const handleDeleteProduct = () => {
+        const id = params?.servID;
         Swal.fire({
             title: "حذف المنتج!",
             text: " اذا تم حذف المنتج لن تكون قادر على استرجاعها مره اخري",
@@ -64,71 +203,71 @@ function ServiceCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'تم!',
-                    'تم حذف المنتج.',
-                    'success'
-                );
-                // منطق لحذف المنتج هنا
+                deleteProduct(id);
+                fetchServicesAvailable();
             }
         });
-    };
-
-    const labels = {
-        normal: "عادي",
-        medium: "متوسط الأهمية",
-        important: "مهم",
-        veryImportant: "مهم جداً"
     };
 
     return (
         <div className="container mx-auto min-h-screen">
             <SecondHead title="تخصيص المنتج" />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="col p-5 bg-[#FFFFFF] shadow-4 rounded-lg h-[451px]">
-                    <h3 className="text-[#00262F] text-base leading-8 font-[700]">استشارة مميزة</h3>
+                <div className="hidden md:block col p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
+                    <h3 className="text-[#00262F] text-base leading-8 font-[700]">{serviceAvailable?.title} </h3>
                     <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
-                    <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]">خدمة رفع دعوي بتحديد المحكمة المختصة والنظام المناسب لها و دراسة نسبة نجاح الدعوي وتكاليفها خدمة رفع دعوي بتحديد المحكمة المختصة</p>
+                    <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {serviceAvailable?.details} </p>
                     <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
                     <h3 className="text-[#00262F] text-sm leading-6 font-[600]">تسعير المنتج</h3>
                     <div className="flex justify-start items-center gap-5 my-3">
-                        <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">200ر.س</button>
-                        <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">200ر.س</button>
+                        <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{serviceAvailable?.min_price}ر.س</button>
+                        <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{serviceAvailable?.max_price}ر.س</button>
                     </div>
-                    <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
-                    <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
-                        <div className="flex items-center gap-3">
-                            <Image src={showIcon} alt='showicon' width={40} height={40} />
-                            <button onClick={handleDisableProduct} className="text-blue-600">تعطيل المنتج</button>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
-                            <button onClick={handleDeleteProduct} className="text-red-600">حذف المنتج</button>
-                        </div>
+                    <div>
+                        {
+                            !serviceAvailable?.is_activated == false && <div>
+                                <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
+                                <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
+                                    <div className="flex items-center gap-3">
+                                        <Image src={showIcon} alt='show_icon' width={40} height={40} />
+                                        {!serviceAvailable?.isHidden ? <button onClick={handleEnableProduct} className="text-blue-600">تفعيل</button> : <button onClick={handleDisableProduct} className="text-blue-600">تعطيل</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
+                                    <button onClick={handleDeleteProduct} className="text-red-600">  حذف المنتج</button>
+                                </div>
+                            </div>
+                        }
+
                     </div>
+
                 </div>
-                <div className="col px-5">
+                <div className=" hidden md:block col px-5 ">
                     <form action="" onSubmit={handleSubmit}>
-                        <div className="flex flex-col gap-6 p-5 bg-[#FFFFFF] shadow-4 rounded-lg h-[300px]">
-                            {Object.keys(toggleStates).map((key) => (
-                                <div key={key} className="flex justify-between items-center">
+                        <div className="flex flex-col gap-6 p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
+                            {serviceAvailable?.ymtaz_levels_prices ? serviceAvailable?.ymtaz_levels_prices.map((price) => (
+                                <div key={price.id} className="flex justify-between items-center">
                                     <div className="flex justify-between items-center gap-3">
                                         <button
                                             type="button"
-                                            onClick={() => handleClick(key)}
-                                            className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${toggleStates[key] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
+                                            onClick={(e) => handleClick(e, price.id)}
+                                            className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
                                         >
                                             <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
                                         </button>
-                                        <span>{labels[key]}</span>
+                                        <span>{price.level?.name}</span>
                                     </div>
                                     <input
                                         type="text"
-                                        className="border border-[#E6E6E6] rounded-lg h-10 p-3"
-                                        placeholder={`أدخل قيمة لـ ${labels[key]}`}
+                                        value={inputValues[price.id] || ''}
+                                        onChange={(e) => { handleInputChange(price.id, e.target.value) }}
+                                        className="border border-[#E6E6E6] rounded-lg   p-3"
+                                        placeholder={`    ر.س ${price.price}`}
                                     />
                                 </div>
-                            ))}
+                            )) : <div>لايوجد اسعار متاحة للعرض </div>}
                         </div>
                         <button
                             type="submit"
@@ -137,6 +276,63 @@ function ServiceCustomizePage({ params }) {
                             حفظ التعديلات
                         </button>
                     </form>
+                </div>
+                <div className="block md:hidden  ">
+                    <div className="col  p-6 bg-[#FFFFFF] shadow-4 rounded-lg  " >
+                        <h3 className="text-[#00262F] text-base leading-8 font-[700]">{serviceAvailable?.title} </h3>
+                        <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
+                        <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {serviceAvailable?.details} </p>
+                        <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
+                        <h3 className="text-[#00262F] text-sm leading-6 font-[600]">تسعير المنتج</h3>
+                        <div className="flex justify-start items-center gap-5 my-3">
+                            <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{serviceAvailable?.min_price}ر.س</button>
+                            <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{serviceAvailable?.max_price}ر.س</button>
+                        </div>
+                    </div>
+                    <div className="col md:px-6  ">
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="flex mt-4 flex-col gap-6 p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
+                                {serviceAvailable?.ymtaz_levels_prices ? serviceAvailable?.ymtaz_levels_prices.map((price) => (
+                                    <div key={price.id} className="flex-col  justify-between items-center">
+                                        <div className="flex justify-between items-center gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => handleClick(price.id)}
+                                                className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
+                                            >
+                                                <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
+                                            </button>
+                                            <span>{price.level?.name}</span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            className="border border-[#E6E6E6] rounded-lg  my-3  p-3"
+                                            placeholder={`    ر.س ${price.price}`}
+                                        />
+                                    </div>
+                                )) : <div>لايوجد اسعار متاحة للعرض </div>}
+                            </div>
+                            <div className="flex flex-col items-start justify-between mt-5 gap-6 text-sm font-semibold leading-8 text-[#00262F] order-3">
+                                {serviceAvailable?.isHidden ? <div className="flex items-center gap-3">
+                                    <Image src={showIcon} alt='showicon' width={40} height={40} />
+                                    <button onClick={handleEnableProduct} className="text-blue-600">تفعيل</button>
+                                </div> : <div className="flex items-center gap-3">
+                                    <Image src={showIcon} alt='showicon' width={40} height={40} />
+                                    <button onClick={handleDisableProduct} className="text-blue-600">تعطيل</button>
+                                </div>}
+                                <div className="flex items-center gap-3">
+                                    <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
+                                    <button onClick={handleDeleteProduct} className="text-red-600">{loading ? "جاري حذف المنتج" : "حذف المنتج"}</button>
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                className="block w-full bg-[#DDB762] rounded-md text-base leading-7 font-bold text-[#FFFFFF] p-4 my-8"
+                            >
+                                حفظ التعديلات
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

@@ -66,7 +66,9 @@ export const API_ENDPOINTS = {
 	ADVISORY_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/lawyer',
 	SERVICE_REPLY_Lawyer:'lawyer/services-request/requested/lawyer/reply',
 	APPOINT_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/client',
-	CONSULTATION_CREATE_PRICES:'lawyer/advisory-services/createPrice'
+	CONSULTATION_CREATE_PRICES:'lawyer/advisory-services/createPrice',
+	SCHEDULE_CREATE_PRICES:'lawyer/reservations/pricing',
+	SERVICE_CREATE_PRICES:'lawyer/services-request/create'
 	 
 
 };

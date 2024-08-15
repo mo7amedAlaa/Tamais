@@ -77,11 +77,11 @@ export const deleteConsultation = async (id:any) => {
     return { data, status };
 };
 export const deleteService = async (id:any) => {
-    const { data, status } = await   defaultAPI.get(`lawyer/services-request/:${id}`);
+    const { data, status } = await   defaultAPI.delete(`lawyer/services-request/${id}`);
     return { data, status };
 };
-export const deleteAppointment = async (id:any) => {
-    const { data, status } = await defaultAPI.delete(`lawyer/reservations/:${id}`);
+export const deleteSchedule = async (id:any) => {
+    const { data, status } = await defaultAPI.delete(`lawyer/reservations/${id}`);
     return { data, status };
 };
 export const changeConsultationEn = async (id:any) => {
@@ -92,15 +92,32 @@ export const changeConsultationDis = async (id:any) => {
     const { data, status } = await  defaultAPI.post(`lawyer/advisory-services/${id}`,{"status": false});
     return { data, status };
 };
-export const changeService = async (id:any) => {
-    const { data, status } = await   defaultAPI.post(`lawyer/services-request/${id}`);
+export const changeScheduleEn = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/reservations/${id}`,{"status": true});
     return { data, status };
 };
-export const changeAppointment = async (id:any) => {
-    const { data, status } = await defaultAPI.post(`lawyer/reservations/${id}`);
+export const changeScheduleDis = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/reservations/${id}`,{"status": false});
     return { data, status };
 };
+export const changeServiceEn = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/services-request/${id}`,{"status": true});
+    return { data, status };
+};
+export const changeServiceDis = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/services-request/${id}`,{"status": false});
+    return { data, status };
+};
+ 
 export const createPriceConsultation = async (formData:any) => {
     const { data, status } = await defaultAPI.post(API_ENDPOINTS.CONSULTATION_CREATE_PRICES,formData);
+    return { data, status };
+};
+export const createPriceSchedule = async (formData:any) => {
+    const { data, status } = await defaultAPI.post(API_ENDPOINTS.SCHEDULE_CREATE_PRICES,formData);
+    return { data, status };
+};
+export const createPriceService = async (formData:any) => {
+    const { data, status } = await defaultAPI.post(API_ENDPOINTS.SERVICE_CREATE_PRICES,formData);
     return { data, status };
 };

@@ -165,7 +165,7 @@ function ConsultationCustomizePage({ params }) {
         }).then((result) => {
             if (result.isConfirmed) {
                 disableProduct(id);
-                Swal('تم حذف النتج بنجاح ', 'تم ازالة جميع التخصيصات التي قمت بها ')
+                fetchAdvisoryAvailable();
             }
         });
     };
@@ -265,7 +265,7 @@ function ConsultationCustomizePage({ params }) {
                                         >
                                             <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
                                         </button>
-                                        <span>{price.importance.name}</span>
+                                        <span>{price.importance?.name}</span>
                                     </div>
                                     <input
                                         type="text"
