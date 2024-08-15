@@ -17,16 +17,18 @@ function ConsultationCustomizePage({ params }) {
     const [advisoryAvailable, setAdvisoryAvailable] = useState<any>(null);
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
     const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
-    const [hidden, setHidden] = useState<boolean>(true);
+
     const { mutate: fetchAdvisoryAvailable } = useMutation({
         mutationFn: getListAdvisoryAvailableForPricing,
+        onMutate: () => {
+            setLoading(true)
+        },
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 const data = res.data.data;
                 setAdvisoriesAvailable(data);
                 const advisory = data.find(item => item.types[0].id == params.consultationID);
                 setAdvisoryAvailable(advisory);
-                setHidden(advisory?.types[0]?.isHidden)
                 const initialVisibility = advisory?.types[0]?.advisory_services_prices.reduce((acc, price) => {
                     acc[price.id] = price.isHidden === 0;
                     return acc;
@@ -46,20 +48,22 @@ function ConsultationCustomizePage({ params }) {
             setLoading(false);
         },
     });
+    useEffect(() => {
+        setLoading(true);
+        fetchAdvisoryAvailable();
+    }, []);
     const { mutate: createListPrice } = useMutation({
         mutationFn: createPriceConsultation,
         onSuccess: (res: any) => {
             if (res.status === 200) {
+                fetchAdvisoryAvailable()
                 toast.success('تم التسعير بنجاح')
-            } else {
-                setError('حدث خطأ أثناء جلب البيانات');
-                console.log('Error fetching data');
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء جلب البيانات');
-            toast.error('حدث خطأ أثناء جلب البيانات');
+            setError('حدث خطأ أثناء  التسعير  ');
+            toast.error('حدث خطأ أثناء  التسعير:');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -68,7 +72,7 @@ function ConsultationCustomizePage({ params }) {
         mutationFn: changeConsultationEn,
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                // setHidden(true)
+                fetchAdvisoryAvailable()
                 toast.success('تم تفعيل المنتج  ')
             } else {
                 setError('حدث خطأ تفعيل أثناء المنتج  ');
@@ -88,9 +92,8 @@ function ConsultationCustomizePage({ params }) {
         mutationFn: changeConsultationDis,
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                toast.success('تم تعطيل المنتج بنجاح')
-            } else {
-                setError('حدث خطأ أثناء تعطيل المنتج');
+                fetchAdvisoryAvailable()
+                toast.success('تم تعطيل المنتج  ')
             }
             setLoading(false);
         },
@@ -101,12 +104,6 @@ function ConsultationCustomizePage({ params }) {
             setLoading(false);
         },
     });
-
-    useEffect(() => {
-        setLoading(true);
-        fetchAdvisoryAvailable();
-    }, [fetchAdvisoryAvailable]);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -114,20 +111,21 @@ function ConsultationCustomizePage({ params }) {
         advisoryAvailable?.types[0]?.advisory_services_prices.forEach(price => {
             formData.append(`importance[${price.id}][id]`, price.importance.id);
             formData.append(`importance[${price.id}][price]`, inputValues[price.id] || price.price);
-            formData.append(`importance[${price.id}][isHidden]`, visibility[`${price.id}`] ? 1 : 0);
+            formData.append(`importance[${price.id}][isHidden]`, (visibility[`${price.id}`] ? 1 : 0).toString());
         });
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
         createListPrice(formData)
-
     };
+
     const handleInputChange = (id, value) => {
         setInputValues((prevValues) => ({
             ...prevValues, [id]: value
         }))
     }
-    const handleClick = (id) => {
+    const handleClick = (e, id) => {
+        e.preventDefault();
         setVisibility(prev => ({
             ...prev,
             [id]: !prev[id]
@@ -148,8 +146,8 @@ function ConsultationCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                enableProduct(id)
-                fetchAdvisoryAvailable()
+                enableProduct(id);
+                fetchAdvisoryAvailable();
             }
         });
     };
@@ -166,13 +164,13 @@ function ConsultationCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                disableProduct(id)
-                fetchAdvisoryAvailable()
+                disableProduct(id);
+                Swal('تم حذف النتج بنجاح ', 'تم ازالة جميع التخصيصات التي قمت بها ')
             }
         });
     };
 
-    const mutation = useMutation({
+    const { mutate: deleteProduct } = useMutation({
         mutationFn: deleteConsultation,
         onMutate: () => {
             setLoading(true);
@@ -180,10 +178,9 @@ function ConsultationCustomizePage({ params }) {
         },
         onSuccess: (res: any) => {
             if (res.status === 200) {
+                fetchAdvisoryAvailable()
                 toast.success('تم حذف المنتج بنجاح');
                 setError(null);
-            } else {
-                setError('حدث خطأ أثناء حذف المنتج ');
             }
             setLoading(false);
         },
@@ -207,7 +204,8 @@ function ConsultationCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                mutation.mutate(id);
+                deleteProduct(id);
+                fetchAdvisoryAvailable();
                 {
                     !error && Swal.fire(
                         'تم!',
@@ -233,23 +231,26 @@ function ConsultationCustomizePage({ params }) {
                         <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{advisoryAvailable?.types[0]?.min_price}ر.س</button>
                         <button className="border border-[#DDB762] rounded-lg text-sm leading-8 font-bold text-[#DDB762] px-5 py-1">{advisoryAvailable?.types[0]?.max_price}ر.س</button>
                     </div>
-                    <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
-                    <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
-                        {advisoryAvailable?.types[0].is_activated && <div className="flex items-center gap-3">
-                            <Image src={showIcon} alt='showicon' width={40} height={40} />
-                            {hidden == false ? <button onClick={handleEnableProduct} className="text-blue-600">تفعيل</button> : <button onClick={handleDisableProduct} className="text-blue-600">تعطيل</button>
-                            }
-                        </div>}
-
-
+                    <div>
                         {
-                            advisoryAvailable?.types[0].is_activated && <div className="flex items-center gap-3">
-                                <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
-                                <button onClick={handleDeleteProduct} className="text-red-600">  حذف المنتج</button>
+                            !advisoryAvailable?.types[0].is_activated == false && <div>
+                                <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
+                                <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
+                                    <div className="flex items-center gap-3">
+                                        <Image src={showIcon} alt='show_icon' width={40} height={40} />
+                                        {!advisoryAvailable?.types[0].isHidden ? <button onClick={handleEnableProduct} className="text-blue-600">تفعيل</button> : <button onClick={handleDisableProduct} className="text-blue-600">تعطيل</button>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Image src={deleteIcon} alt='deleteicon' width={40} height={40} />
+                                    <button onClick={handleDeleteProduct} className="text-red-600">  حذف المنتج</button>
+                                </div>
                             </div>
                         }
 
                     </div>
+
                 </div>
                 <div className=" hidden md:block col px-5 ">
                     <form action="" onSubmit={handleSubmit}>
@@ -259,7 +260,7 @@ function ConsultationCustomizePage({ params }) {
                                     <div className="flex justify-between items-center gap-3">
                                         <button
                                             type="button"
-                                            onClick={() => handleClick(price.id)}
+                                            onClick={(e) => handleClick(e, price.id)}
                                             className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
                                         >
                                             <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
@@ -320,7 +321,7 @@ function ConsultationCustomizePage({ params }) {
                                 )) : <div>لايوجد اسعار متاحة للعرض </div>}
                             </div>
                             <div className="flex flex-col items-start justify-between mt-5 gap-6 text-sm font-semibold leading-8 text-[#00262F] order-3">
-                                {hidden ? <div className="flex items-center gap-3">
+                                {advisoryAvailable?.types[0].isHidden ? <div className="flex items-center gap-3">
                                     <Image src={showIcon} alt='showicon' width={40} height={40} />
                                     <button onClick={handleEnableProduct} className="text-blue-600">تفعيل</button>
                                 </div> : <div className="flex items-center gap-3">
