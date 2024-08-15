@@ -16,7 +16,7 @@ function ConsultationCustomizePage({ params }) {
     const [advisoriesAvailable, setAdvisoriesAvailable] = useState<any>(null);
     const [advisoryAvailable, setAdvisoryAvailable] = useState<any>(null);
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
-    const [visibility, setVisibility] = useState<{ [key: any]: boolean }>({});
+    const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
     const [hidden, setHidden] = useState<boolean>(true);
     const { mutate: fetchAdvisoryAvailable } = useMutation({
         mutationFn: getListAdvisoryAvailableForPricing,
@@ -30,7 +30,7 @@ function ConsultationCustomizePage({ params }) {
                 const initialVisibility = advisory?.types[0]?.advisory_services_prices.reduce((acc, price) => {
                     acc[price.id] = price.isHidden === 0;
                     return acc;
-                }, {} as { [key: any]: boolean });
+                }, {} as { [key: string]: boolean });
                 setVisibility(initialVisibility);
                 console.log('Data fetched successfully', data);
             } else {
@@ -114,7 +114,7 @@ function ConsultationCustomizePage({ params }) {
         advisoryAvailable?.types[0]?.advisory_services_prices.forEach(price => {
             formData.append(`importance[${price.id}][id]`, price.importance.id);
             formData.append(`importance[${price.id}][price]`, inputValues[price.id] || price.price);
-            formData.append(`importance[${price.id}][isHidden]`, visibility[price.id] ? 1 : 0);
+            formData.append(`importance[${price.id}][isHidden]`, visibility[`${price.id}`] ? 1 : 0);
         });
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
