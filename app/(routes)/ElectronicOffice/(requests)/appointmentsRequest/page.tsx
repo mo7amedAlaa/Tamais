@@ -1,9 +1,7 @@
-import AppointmentsRequest from '@/app/_components/pages/ElectronicOffice/AppointmentsRequest'
-import React from 'react'
-
+import AppointmentsRequests from "@/app/_components/pages/ElectronicOffice/AppointmentsRequest"
 function MyAppointments() {
   return (
-    <AppointmentsRequest/>
+    <AppointmentsRequests />
   )
 }
 

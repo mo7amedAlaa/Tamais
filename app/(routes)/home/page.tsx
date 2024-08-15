@@ -364,16 +364,16 @@ export default function Home() {
 				</div>
 				<ScrollingLogos
 					title="الشركاء والرعاة"
-					// logos={[
-					// 	'/home/Rise.svg',
-					// 	'/home/Pinpoint.svg',
-					// 	'/home/Rise.svg',
-					// 	'/home/Pinpoint.svg',
-					// 	'/home/Rise.svg',
-					// 	'/home/Pinpoint.svg',
-					// 	'/home/Rise.svg',
-					// ]}
-					logos={[]}
+					logos={[
+						'/home/Rise.svg',
+						'/home/Pinpoint.svg',
+						'/home/Rise.svg',
+						'/home/Pinpoint.svg',
+						'/home/Rise.svg',
+						'/home/Pinpoint.svg',
+						'/home/Rise.svg',
+					]}
+
 				/>
 			</div>
 		</div>

@@ -5,10 +5,13 @@ import React from "react";
 
 const page = () => {
   return (
-    <ProtectedRoute>
-      <Hero />
-      <Feature />
-    </ProtectedRoute>
+    <>
+        <Hero />
+        <Feature />
+
+    </>
+
+
   );
 };
 

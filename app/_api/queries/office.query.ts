@@ -84,15 +84,23 @@ export const deleteAppointment = async (id:any) => {
     const { data, status } = await defaultAPI.delete(`lawyer/reservations/:${id}`);
     return { data, status };
 };
-export const changeConsultation = async (id:any) => {
-    const { data, status } = await  defaultAPI.post(`lawyer/advisory-services/${id}`);
+export const changeConsultationEn = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/advisory-services/${id}`,{"status": true});
+    return { data, status };
+};
+export const changeConsultationDis = async (id:any) => {
+    const { data, status } = await  defaultAPI.post(`lawyer/advisory-services/${id}`,{"status": false});
     return { data, status };
 };
 export const changeService = async (id:any) => {
-    const { data, status } = await   defaultAPI.post(`lawyer/services-request/:${id}`);
+    const { data, status } = await   defaultAPI.post(`lawyer/services-request/${id}`);
     return { data, status };
 };
 export const changeAppointment = async (id:any) => {
-    const { data, status } = await defaultAPI.post(`lawyer/reservations/:${id}`);
+    const { data, status } = await defaultAPI.post(`lawyer/reservations/${id}`);
+    return { data, status };
+};
+export const createPriceConsultation = async (formData:any) => {
+    const { data, status } = await defaultAPI.post(API_ENDPOINTS.CONSULTATION_CREATE_PRICES,formData);
     return { data, status };
 };

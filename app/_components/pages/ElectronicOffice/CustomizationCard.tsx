@@ -45,13 +45,16 @@ function CustomizationCard({ active, title, prices, type, link }: ServiceCardPro
                 <div className='bg-[#E9ECF2] w-full h-[1px] my-4'></div>
                 <div className="mt-4 flex flex-col text-[#00262F] font-[600] gap-2">
                     {type === 1 && prices.map((price) => (
-                        <div key={price.id} className="flex justify-between">
-                            <span className='flex gap-3'>
-                                <Image src={dollar} alt="price-icon" />
-                                {price.importance?.name}
-                            </span>
-                            <span className='text-[#A6A4A4]'>{price.price} رس</span>
-                        </div>
+                        price.isHidden == 1 ?
+                            <div key={price.id} className="flex justify-between" >
+                                <span className='flex gap-3'>
+                                    <Image src={dollar} alt="price-icon" />
+                                    {price.importance?.name}
+                                </span>
+                                <span className='text-[#A6A4A4]'>{price.price} رس</span>
+                            </div> : <></>
+
+
                     ))}
                     {type === 2 && prices.map((price) => (
                         <div key={price.id} className="flex justify-between">
@@ -73,7 +76,7 @@ function CustomizationCard({ active, title, prices, type, link }: ServiceCardPro
                     ))}
                 </div>
             </div>
-        </Link>
+        </Link >
     );
 }
 

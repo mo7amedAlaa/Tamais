@@ -1,3 +1,4 @@
+ 
 export const ACCESS_TOKEN = 'accessToken';
 export const BASE_URL = 'https://api.ymtaz.sa/api';
 // export const BASE_URL = 'http://localhost:8000/api';
@@ -64,7 +65,8 @@ export const API_ENDPOINTS = {
 	APPOINT_REPLY_CLIENT:'lawyer/advisory-services/requested/reply/client',
 	ADVISORY_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/lawyer',
 	SERVICE_REPLY_Lawyer:'lawyer/services-request/requested/lawyer/reply',
-	APPOINT_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/client'
+	APPOINT_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/client',
+	CONSULTATION_CREATE_PRICES:'lawyer/advisory-services/createPrice'
 	 
 
 };

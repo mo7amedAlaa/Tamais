@@ -7,7 +7,17 @@ import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+
 type TabType = string;
+
+const statusMapping: Record<number, string> = {
+  1: 'جديد',
+  2: 'انتظار',
+  3: 'متاخر',
+  4: 'غير منجز',
+  5: 'منجز'
+};
+
 function ConsultationsRequests() {
   const [activeTab, setActiveTab] = useState<TabType>('Customers');
   const buttonTitles = {
@@ -38,6 +48,7 @@ function ConsultationsRequests() {
       setLoading(false);
     },
   });
+
   const { mutate: fetchReservationsFromClients } = useMutation({
     mutationFn: getListReservedFromClient,
     onSuccess: (res: any) => {
@@ -65,7 +76,8 @@ function ConsultationsRequests() {
   }, [fetchReservationsFromDigitalGuide, fetchReservationsFromClients]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error:{error}</div>
+  if (error) return <div>Error:{error}</div>;
+
   return (
     <div className='container mx-auto min-h-screen'>
       <SecondHead title={'طلبات الاستشارات'} />
@@ -75,36 +87,40 @@ function ConsultationsRequests() {
         buttonTitles={buttonTitles}
       />
       {activeTab === 'DigitalGuide' ?
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
-
-          {digitalReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/Reply_Lawyer_Consultations/${reservation.id}`} key={reservation.id}>
-            <RequestConsultationCard
-              status={reservation.request_status}
-              title={reservation.advisory_services_id.title}
-              date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-              time={new Date("2024-06-23T21:17:20.000000Z").toLocaleTimeString('ar-US')}
-              importance={reservation.importance.title}
-              price={reservation.price}
-              senderName={reservation.lawyer.name}
-              senderImage={reservation.lawyer.photo}
-            />
-          </Link>)}
-        </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6 ">
-          {clientsReservations?.map((reservation, index) => <Link href={`/ElectronicOffice/consultationsRequest/Reply_Cleint_Consultations/${reservation.id}`} key={reservation.id}>
-            <RequestConsultationCard
-              status={reservation.request_status}
-              title={reservation.advisory_services_id.title}
-              time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
-              date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-              importance={reservation.importance.title}
-              price={reservation.price}
-              senderName={reservation.lawyer.name}
-              senderImage={reservation.lawyer.photo}
-            />
-          </Link>)}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4 justify-center py-3 md:py-6">
+          {digitalReservations?.map((reservation: any) => (
+            <Link href={`/ElectronicOffice/consultationsRequest/Reply_Lawyer_Consultations/${reservation.id}`} key={reservation.id}>
+              <RequestConsultationCard
+                status={statusMapping[reservation.request_status] || 'غير محدد'}
+                title={reservation.advisory_services_id.title}
+                date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+                time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
+                importance={reservation.importance.title}
+                price={reservation.price}
+                senderName={reservation.lawyer.name}
+                senderImage={reservation.lawyer.photo}
+              />
+            </Link>
+          ))}
+        </div> :
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4 justify-center py-3 md:py-6 ">
+          {clientsReservations?.map((reservation: any) => (
+            <Link href={`/ElectronicOffice/consultationsRequest/Reply_Cleint_Consultations/${reservation.id}`} key={reservation.id}>
+              <RequestConsultationCard
+                status={statusMapping[reservation.request_status] || 'غير محدد'}
+                title={reservation.advisory_services_id.title}
+                date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+                time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
+                importance={reservation.importance.title}
+                price={reservation.price}
+                senderName={reservation.lawyer.name}
+                senderImage={reservation.lawyer.photo}
+              />
+            </Link>
+          ))}
         </div>}
     </div>
-  )
+  );
 }
 
-export default ConsultationsRequests
+export default ConsultationsRequests;

@@ -1,11 +1,5 @@
 'use client';
 import { UserProfileResponse } from '@/app/_api/interfaces/UserProfileResponse';
-import CompaniesSectionSwiper from '@/app/_components/pages/home/CompaniesSectionSwiper';
-import HelperSystemsSection from '@/app/_components/pages/home/HelperSystemsSection';
-import NewCommerceSection from '@/app/_components/pages/home/NewCommerceSection';
-import SectionWithoutGoldCard from '@/app/_components/pages/home/SectionWithoutGoldCard';
-import Header from '@/app/_components/pages/home/header/Header';
-import ServicesSection from '@/app/_components/pages/home/servicesSection/ServicesSection';
 import NotificationPanel from '@/app/_components/pages/profile/NotificationPanel';
 import { PROFILE_TYPE } from '@/app/_helpers/config/constants';
 import ProtectedRoute from '@/app/_helpers/middleware/ProtectedRoute';
@@ -14,15 +8,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaFacebook, FaLinkedin, FaUserEdit } from 'react-icons/fa';
+import { FaUserEdit } from 'react-icons/fa';
 import {
-	FaClipboard,
-	FaClipboardList,
 	FaGear,
 	FaHeart,
 	FaPhone,
-	FaUser,
-	FaXTwitter,
+	FaUser
 } from 'react-icons/fa6';
 
 export default function Home() {
@@ -51,8 +42,8 @@ export default function Home() {
 						<p>تم تعديل الملف بنجاح</p>
 					</div>
 				) : null}
-				<main className="w-full flex gap-[25px] py-12 md:pr-20">
-					<div className="hidden md:flex flex-col pl-30 pr-4 py-8 rounded-md text-[#00262F] shadow-md gap-12 h-auto max-h-fit">
+				<main className=" container mx-auto   flex flex-col-reverse md:flex-row gap-[25px] py-12 md:pr-20">
+					<div className="  md:flex flex-col pl-30 pr-4 py-8 rounded-md text-[#00262F] bg-[#fff] shadow-md gap-12 h-auto max-h-fit">
 						<Link
 							href="/homePage/profile"
 							className="flex flex-row gap-4 justify-start items-center text-gold"
@@ -97,6 +88,12 @@ export default function Home() {
 							</svg>
 							<p>الباقات والاشتراكات</p>
 						</div>
+						{userType == 'lawyer' && (
+							<Link href={'/ElectronicOffice'} className="flex flex-row gap-4 justify-start items-center hover:cursor-pointer">
+								< FaHeart />
+								<p>  المكتب الالكتروني</p>
+							</Link>
+						)}
 						<div className="flex flex-row gap-4 justify-start items-center hover:cursor-pointer">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -149,11 +146,10 @@ export default function Home() {
 										(item, index) => (
 											<div
 												key={index}
-												className={`py-2 px-4 rounded-md shadow-md text-center text-white ${
-													index % 2 === 0
-														? 'bg-[#658D96]'
-														: 'bg-[#E4D2A9]'
-												}`}
+												className={`py-2 px-4 rounded-md shadow-md text-center text-white ${index % 2 === 0
+													? 'bg-[#658D96]'
+													: 'bg-[#E4D2A9]'
+													}`}
 											>
 												{item.section.title}
 											</div>
@@ -197,7 +193,7 @@ export default function Home() {
 						</div>
 					</div>
 				</main>
-			</ProtectedRoute>
+			</ProtectedRoute >
 		);
 	}
 }

@@ -38,7 +38,7 @@ function Page() {
   }, [fetchServicesAvailable]);
   return (
     <div className="container m-auto  min-h-screen">
-      <SecondHead title="تخصيص المواعيد" />
+      <SecondHead title="تخصيص الخدمات" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
         {
           ServicesAvailable?.map((advisory, index) => <div key={advisory.id} >
