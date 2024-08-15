@@ -16,7 +16,7 @@ function ConsultationCustomizePage({ params }) {
     const [advisoriesAvailable, setAdvisoriesAvailable] = useState<any>(null);
     const [advisoryAvailable, setAdvisoryAvailable] = useState<any>(null);
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
-    const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
+    const [visibility, setVisibility] = useState<{ [key: any]: boolean }>({});
     const [hidden, setHidden] = useState<boolean>(true);
     const { mutate: fetchAdvisoryAvailable } = useMutation({
         mutationFn: getListAdvisoryAvailableForPricing,
@@ -30,7 +30,7 @@ function ConsultationCustomizePage({ params }) {
                 const initialVisibility = advisory?.types[0]?.advisory_services_prices.reduce((acc, price) => {
                     acc[price.id] = price.isHidden === 0;
                     return acc;
-                }, {} as { [key: string]: boolean });
+                }, {} as { [key: any]: boolean });
                 setVisibility(initialVisibility);
                 console.log('Data fetched successfully', data);
             } else {
