@@ -113,9 +113,7 @@ function ConsultationCustomizePage({ params }) {
             formData.append(`importance[${price.id}][price]`, inputValues[price.id] || price.price);
             formData.append(`importance[${price.id}][isHidden]`, (visibility[`${price.id}`] ? 1 : 0).toString());
         });
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
+
         createListPrice(formData)
     };
 
