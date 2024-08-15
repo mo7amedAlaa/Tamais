@@ -17,7 +17,7 @@ function ConsultationCustomizePage({ params }) {
     const [advisoryAvailable, setAdvisoryAvailable] = useState<any>(null);
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
     const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
-    const [hidden, setHidden] = useState<boolean>(null);
+    const [hidden, setHidden] = useState<boolean>(true);
     const { mutate: fetchAdvisoryAvailable } = useMutation({
         mutationFn: getListAdvisoryAvailableForPricing,
         onSuccess: (res: any) => {
