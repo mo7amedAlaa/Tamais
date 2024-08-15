@@ -60,7 +60,7 @@ function Page() {
   const { mutate: disableProduct } = useMutation({
     mutationFn: changeScheduleDis,
     onSuccess: (res: any) => {
-      fetchAdvisoryAvailable()
+      fetchSchedulesAvailable()
       toast.success('تم تعطيل الموعد ')
       setLoading(false);
     },
