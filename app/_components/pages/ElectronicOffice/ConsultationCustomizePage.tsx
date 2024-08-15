@@ -303,7 +303,7 @@ function ConsultationCustomizePage({ params }) {
                                         <div className="flex justify-between items-center gap-3">
                                             <button
                                                 type="button"
-                                                onClick={() => handleClick(price.id)}
+                                                onClick={(e) => handleClick(e, price.id)}
                                                 className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
                                             >
                                                 <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
