@@ -34,11 +34,6 @@ export default function RootLayout({
 			MySwal.fire({
 				title: 'Custom Title',
 				html: '<p>This is a customized alert!</p>',
-				customClass: {
-					title: 'text-red-700',
-					content: 'text-gray-800',
-					confirmButton: 'bg-blue-500 text-white',
-				},
 				confirmButtonColor: '#3085d6',
 				confirmButtonText: 'OK',
 			});
