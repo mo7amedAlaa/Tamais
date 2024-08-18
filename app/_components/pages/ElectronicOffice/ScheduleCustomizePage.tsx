@@ -86,7 +86,7 @@ function ScheduleCustomizePage({ params }) {
                 fetchSchedulesAvailable();
                 MySwal.fire('Success', 'تم تفعيل المنتج', 'success');
             } else {
-                MySwal.fire('Error', { error }, 'error');
+                MySwal.fire('Error', `${error}`, 'error');
             }
             setLoading(false);
         },
