@@ -123,7 +123,7 @@ function ScheduleCustomizePage({ params }) {
             setLoading(false);
         },
         onError: (error: any) => {
-            MySwal.fire('Error', { error }, 'error');
+            MySwal.fire('Error', `${error}`, 'error');
             console.error('Error:', error);
             setLoading(false);
         },
