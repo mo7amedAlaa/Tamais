@@ -32,16 +32,17 @@ export default function RootLayout({
 	useEffect(() => {
 		if (userType && userType !== 'lawyer') {
 			MySwal.fire({
-				icon: 'error',
-				title: 'Access Denied',
-				text: 'Sorry, this page is only available for lawyers.',
+				title: 'Custom Title',
+				html: '<p>This is a customized alert!</p>',
 				customClass: {
 					title: 'text-red-700',
-					text: 'text-gray-800'
+					content: 'text-gray-800',
+					confirmButton: 'bg-blue-500 text-white',
 				},
 				confirmButtonColor: '#3085d6',
-				confirmButtonText: 'OK'
+				confirmButtonText: 'OK',
 			});
+
 		}
 	}, [userType]);
 
