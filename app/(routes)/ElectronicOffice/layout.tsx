@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Almarai, Cairo, Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const almarai = Almarai({ weight: '400', subsets: ['arabic'] });

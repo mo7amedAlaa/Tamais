@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 function ConsultationCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
@@ -56,7 +57,7 @@ function ConsultationCustomizePage({ params }) {
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 fetchAdvisoryAvailable()
-                Swal.fire(
+                MySwal.fire(
                     'تم!',
                     'تم التسعير بنجاح.',
                     'success'

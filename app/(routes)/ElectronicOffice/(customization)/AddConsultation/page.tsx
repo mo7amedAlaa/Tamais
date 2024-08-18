@@ -2,14 +2,17 @@
 import { changeConsultationDis, changeConsultationEn, getListAdvisoryAvailableForPricing } from "@/app/_api/queries/office.query";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import dollar from '@/public/Icons/dollar.svg';
+import emptyStateImg from '@/public/publicImage/empty-box.png';
 import { useMutation } from "@tanstack/react-query";
 import { motion } from 'framer-motion';
-import emptyStateImg from '@/public/publicImage/empty-box.png';
-import Swal from "sweetalert2";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
+
 function Page() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +32,7 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء جلب البيانات');
-      Swal.fire('Error', `${error}`, 'error');
+      MySwal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
@@ -54,7 +57,7 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء تفعيل الخدمة  ');
-      Swal.fire('Error', `${error}`, 'error');
+      MySwal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
@@ -69,7 +72,7 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء تعطيل الخدمة');
-      Swal.fire('Error', `${error}`, 'error');
+      MySwal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
