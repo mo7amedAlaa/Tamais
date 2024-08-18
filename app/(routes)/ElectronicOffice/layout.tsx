@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Almarai, Cairo, Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+const MySwal = withReactContent(Swal);
 
 const almarai = Almarai({ weight: '400', subsets: ['arabic'] });
 const inter = Inter({ subsets: ['latin'] });
@@ -29,7 +30,7 @@ export default function RootLayout({
 
 	useEffect(() => {
 		if (userType && userType !== 'lawyer') {
-			Swal.fire({
+			MySwal.fire({
 				icon: 'error',
 				title: 'Access Denied',
 				text: 'Sorry, this page is only available for lawyers.',
