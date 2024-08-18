@@ -7,7 +7,7 @@ import showIcon from '@/public/Icons/show.svg';
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import MySwal from 'sweetalert2';
+import Swal from 'sweetalert2';
 const MySwal = withReactContent(Swal);
 function ConsultationCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
