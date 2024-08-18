@@ -85,13 +85,11 @@ function ScheduleCustomizePage({ params }) {
             if (res.status === 200) {
                 fetchSchedulesAvailable();
                 MySwal.fire('Success', 'تم تفعيل المنتج', 'success');
-            } else {
-                MySwal.fire('Error', `${error}`, 'error');
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            MySwal.fire('Error', 'حدث خطأ أثناء تفعيل المنتج', 'error');
+            MySwal.fire('Error', `${error}`, 'error');
             console.error('Error:', error);
             setLoading(false);
         },
