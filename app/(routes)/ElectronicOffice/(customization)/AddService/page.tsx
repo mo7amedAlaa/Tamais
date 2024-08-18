@@ -2,11 +2,14 @@
 import { changeServiceDis, changeServiceEn, getListServicesAvailableForPricing } from "@/app/_api/queries/office.query";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import dollar from '@/public/Icons/dollar.svg';
+import emptyStateImg from '@/public/publicImage/empty-box.png';
 import { useMutation } from "@tanstack/react-query";
+import { motion } from 'framer-motion';
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 function Page() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +29,7 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء جلب البيانات');
-      toast.error('حدث خطأ أثناء جلب البيانات');
+      Swal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
@@ -51,7 +54,7 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء تفعيل الخدمة  ');
-      toast.error('حدث خطأ أثناء تفعيل الخدمة ');
+      Swal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
@@ -66,29 +69,62 @@ function Page() {
     },
     onError: (error: any) => {
       setError('حدث خطأ أثناء تعطيل الخدمة');
-      toast.error('حدث خطأ أثناء تعطيل الخدمة');
+      Swal.fire('Error', `${error}`, 'error');
       console.log('Error:', error);
       setLoading(false);
     },
   });
 
   const handleEnableProduct = (e: React.MouseEvent<HTMLButtonElement>, id, active) => {
-    e.preventDefault();
     if (active) {
+      e.preventDefault();
       enableProduct(id)
     }
   };
 
   const handleDisableProduct = (e: React.MouseEvent<HTMLButtonElement>, id, active) => {
-    e.preventDefault();
     if (active) {
+      e.preventDefault();
       disableProduct(id)
     }
   };
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="flex flex-col items-center">
+        <svg
+          className="animate-spin h-8 w-8 text-blue-600 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+        <p className="text-blue-600 font-semibold">جاري تحميل البيانات...</p>
+      </div>
+    </div>
+  );
+
 
   return (
-    <div className="container m-auto  min-h-screen">
+    <motion.div className="container m-auto  min-h-screen"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <SecondHead title="تخصيص الخدمات " />
+      {servicesAvailable?.length === 0 && !loading && (<div className="flex flex-col items-center justify-center min-h-[50vh]"> <Image src={emptyStateImg} alt="No Data" className="w-52 h-52 mb-4" /> <p className="text-lg font-semibold text-gray-500">لا يوجد طلبات للعرض</p> </div>)}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4  justify-center py-3 md:py-6">
         {
           servicesAvailable?.map(service => <div key={service.id}>
@@ -110,20 +146,18 @@ function Page() {
                     </button>
                   }
                 </div>
-                {(service.is_activated && service.isHidden) &&
+                {service.is_activated &&
                   <div className="mt-4 flex flex-col text-[#00262F] font-[600] gap-2">
-                    {service.isHidden && <div>
-                      <div className='bg-[#E9ECF2] w-full h-[1px] my-4'></div>
-                      {service.lawyerPrices?.map((price) => (
-                        price.isHidden === 1 ? <div key={price.id} className="flex justify-between" >
-                          <span className='flex gap-3'>
-                            <Image src={dollar} alt="price-icon" />
-                            {price.level?.name}
-                          </span>
-                          <span className='text-[#A6A4A4]'>{price.price}رس</span>
-                        </div> : <></>
-                      ))}
-                    </div>}
+                    <div className='bg-[#E9ECF2] w-full h-[1px] my-4'></div>
+                    {service.lawyerPrices?.map((price) => (
+                      <div key={price.id} className="flex justify-between" >
+                        <span className='flex gap-3'>
+                          <Image src={dollar} alt="price-icon" />
+                          {price.level?.name}
+                        </span>
+                        <span className='text-[#A6A4A4]'>{price.price}رس</span>
+                      </div>
+                    ))}
                   </div>
                 }
               </div>
@@ -131,7 +165,7 @@ function Page() {
           </div>)
         }
       </div>
-    </div>
+    </motion.div>
 
   )
 }

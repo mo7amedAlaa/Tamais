@@ -2,17 +2,20 @@
 import { analytics } from '@/app/_api/queries/office.query';
 import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { motion } from 'framer-motion';
+
+const MySwal = withReactContent(Swal);
 
 interface StatusCircleProps {
-  type: string;  
+  type: string;
 }
 
 const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
-  const [loading, setLoading] = useState<boolean>(false);  
-  const [error, setError] = useState<string | null>(null);  
+  const [loading, setLoading] = useState<boolean>(false);
   const [chartData, setChartData] = useState<any>(null);
- 
+
   const { mutate } = useMutation({
     mutationFn: analytics,
     onSuccess: (res: any) => {
@@ -20,15 +23,12 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
         setChartData(res.data.data);
         console.log('Data fetched successfully', chartData);
       } else {
-        setError('حدث خطأ أثناء جلب البيانات');
-        console.log('Error fetching data');
+        handleError();
       }
       setLoading(false);
     },
-    onError: (error: any) => {
-      setError('حدث خطأ أثناء جلب البيانات');
-      toast.error('حدث خطأ أثناء جلب البيانات');
-      console.log('Error:', error);
+    onError: () => {
+      handleError();
       setLoading(false);
     },
   });
@@ -38,8 +38,40 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
     mutate();
   }, [mutate]);
 
-  if (loading) return <div>Loading...</div>;  
-  if (error) return <div>Error: {error}</div>;
+  const handleError = () => {
+    MySwal.fire({
+      icon: 'error',
+      title: 'خطأ',
+      text: 'حدث خطأ أثناء جلب البيانات',
+    });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[150px]">
+        <svg
+          className="animate-spin h-8 w-8 text-blue-600"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+      </div>
+    );
+  }
 
   const selectedData = chartData?.[type] || {};
   const total = selectedData.total || 0;
@@ -53,7 +85,7 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
       statuses = [
         { label: 'مكتمل', value: selectedData.done || 0, color: '#E56262' },
         { label: 'منتظر', value: selectedData.pending || 0, color: '#DDB762' },
-        { label: 'متأخر', value: selectedData.late || 0, color: '#00262F' }
+        { label: 'متأخر', value: selectedData.late || 0, color: '#00262F' },
       ];
       break;
     case 'advisoryServices':
@@ -61,14 +93,14 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
       statuses = [
         { label: 'مكتمل', value: selectedData.done || 0, color: '#E56262' },
         { label: 'منتظر', value: selectedData.pending || 0, color: '#DDB762' },
-        { label: 'متأخر', value: selectedData.late || 0, color: '#00262F' }
+        { label: 'متأخر', value: selectedData.late || 0, color: '#00262F' },
       ];
       break;
     case 'appointments':
       values = [selectedData.done, selectedData.pending];
       statuses = [
         { label: 'مكتمل', value: selectedData.done || 0, color: '#E56262' },
-        { label: 'منتظر', value: selectedData.pending || 0, color: '#DDB762' }
+        { label: 'منتظر', value: selectedData.pending || 0, color: '#DDB762' },
       ];
       break;
     default:
@@ -79,10 +111,20 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
   const percentages = total > 0 ? values.map(value => (value / total) * 100) : [0, 0, 0];
 
   return (
-    <div className='w-full flex flex-col items-center'>
+    <motion.div
+      className="w-full flex flex-col items-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {total >= 0 ? (
         <>
-          <div className="relative w-44 h-44 flex items-center justify-center">
+          <motion.div
+            className="relative w-44 h-44 flex items-center justify-center"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <svg viewBox="0 0 36 36" className="w-full h-full absolute">
               {percentages.map((percentage, index) => {
                 const offset = percentages.slice(0, index).reduce((acc, value) => acc + value, 0);
@@ -104,14 +146,14 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
               })}
             </svg>
             <div className="absolute text-center">
-              <span className='block text-[#00262F] text-[23.36px] font-[700]'>
+              <span className="block text-[#00262F] text-[23.36px] font-[700]">
                 {total}
               </span>
-              <span className='block text-[#A6A4A4] text-[20.44px] font-[600]'>
+              <span className="block text-[#A6A4A4] text-[20.44px] font-[600]">
                 الإجمالي
               </span>
             </div>
-          </div>
+          </motion.div>
           <div className="mt-4 w-full flex items-center">
             {statuses.map((status, index) => (
               <div key={index} className="flex items-center w-full justify-around px-4 py-2">
@@ -129,7 +171,7 @@ const StatusCircle: React.FC<StatusCircleProps> = ({ type }) => {
       ) : (
         <div className="text-center text-gray-500">لا توجد بيانات لعرضها</div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

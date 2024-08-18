@@ -7,9 +7,8 @@ import showIcon from '@/public/Icons/show.svg';
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import Swal from 'sweetalert2';
-
+import MySwal from 'sweetalert2';
+const MySwal = withReactContent(Swal);
 function ConsultationCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -43,7 +42,7 @@ function ConsultationCustomizePage({ params }) {
         },
         onError: (error: any) => {
             setError('حدث خطأ أثناء جلب البيانات');
-            toast.error('حدث خطأ أثناء جلب البيانات');
+            MySwal.fire('Error', `${error}`, 'error');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -57,13 +56,17 @@ function ConsultationCustomizePage({ params }) {
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 fetchAdvisoryAvailable()
-                toast.success('تم التسعير بنجاح')
+                Swal.fire(
+                    'تم!',
+                    'تم التسعير بنجاح.',
+                    'success'
+                );
             }
             setLoading(false);
         },
         onError: (error: any) => {
             setError('حدث خطأ أثناء  التسعير  ');
-            toast.error('حدث خطأ أثناء  التسعير:');
+            MySwal.fire('Error', `${error}`, 'error');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -73,7 +76,7 @@ function ConsultationCustomizePage({ params }) {
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 fetchAdvisoryAvailable()
-                toast.success('تم تفعيل المنتج  ')
+                MySwal.fire('Success', 'تم تفعيل المنتج', 'success');
             } else {
                 setError('حدث خطأ تفعيل أثناء المنتج  ');
                 console.log('Error fetching data');
@@ -83,7 +86,7 @@ function ConsultationCustomizePage({ params }) {
         },
         onError: (error: any) => {
             setError('حدث خطأ أثناء تفعيل المنتج  ');
-            toast.error('حدث خطأ أثناء تفعيل المنتج  ');
+            MySwal.fire('Error', `${error}`, 'error');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -93,13 +96,13 @@ function ConsultationCustomizePage({ params }) {
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 fetchAdvisoryAvailable()
-                toast.success('تم تعطيل المنتج  ')
+                MySwal.fire('Success', 'تم تعطيل المنتج', 'success');
             }
             setLoading(false);
         },
         onError: (error: any) => {
             setError('حدث خطأ أثناء تعطيل المنتج');
-            toast.error('حدث خطأ أثناء تعطيل المنتج');
+            MySwal.fire('Error', `${error}`, 'error');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -177,13 +180,17 @@ function ConsultationCustomizePage({ params }) {
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 fetchAdvisoryAvailable()
-                toast.success('تم حذف المنتج بنجاح');
+                Swal.fire(
+                    'تم!',
+                    'تم حذف المنتج.',
+                    'success'
+                );
                 setError(null);
+                setLoading(false);
             }
-            setLoading(false);
         },
         onError: (error: any) => {
-            toast.error('حدث خطأ أثناء حذف المنتج');
+            MySwal.fire('Error', `${error}`, 'error');
             console.log('Error:', error);
             setLoading(false);
         },
@@ -204,13 +211,7 @@ function ConsultationCustomizePage({ params }) {
             if (result.isConfirmed) {
                 deleteProduct(id);
                 fetchAdvisoryAvailable();
-                {
-                    !error && Swal.fire(
-                        'تم!',
-                        'تم حذف المنتج.',
-                        'success'
-                    );
-                }
+
             }
         });
     };

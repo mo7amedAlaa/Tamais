@@ -4,134 +4,160 @@ import SecondHead from "@/app/_components/ui/SecondHead";
 import deleteIcon from '@/public/Icons/delete.svg';
 import showIcon from '@/public/Icons/show.svg';
 import { useMutation } from "@tanstack/react-query";
+import { motion } from 'framer-motion';
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import Swal from 'sweetalert2';
+
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 function ScheduleCustomizePage({ params }) {
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
     const [schedulesAvailable, setSchedulesAvailable] = useState<any>(null);
     const [scheduleAvailable, setScheduleAvailable] = useState<any>(null);
-    const [inputValues, setInputValues] = useState<{ [key: string]: string }>({})
+    const [priceList, setPriceList] = useState<any>(null);
+    const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
     const [visibility, setVisibility] = useState<{ [key: string]: boolean }>({});
 
     const { mutate: fetchSchedulesAvailable } = useMutation({
         mutationFn: getListAppointmentAvailableForPricing,
-        onMutate: () => {
-            setLoading(true)
-        },
-        onSuccess: (res: any) => {
+        onMutate: () => setLoading(true),
+        onSuccess: (res) => {
             if (res.status === 200) {
                 const data = res.data.data.reservationTypes;
                 setSchedulesAvailable(data);
                 const schedule = data.find(item => item.id == params.scheduleID);
                 setScheduleAvailable(schedule);
-                const initialVisibility = schedule?.ymtazPrices.reduce((acc, price) => {
-                    acc[price.id] = price.isHidden === 0;
+                const prices = schedule.is_activated ? schedule.lawyerPrices : schedule.ymtazPrices;
+                setPriceList(prices);
+                // Initialize visibility and input values based on the fetched data
+                const initialVisibility = prices.reduce((acc, price) => {
+                    acc[price.level.id] = price.isHidden === 0;
                     return acc;
-                }, {} as { [key: string]: boolean });
+                }, {});
+                const initialInputValues = prices.reduce((acc, price) => {
+                    acc[price.level.id] = price.price;
+                    return acc;
+                }, {});
                 setVisibility(initialVisibility);
-                console.log('Data fetched successfully', data);
-            } else {
-                setError('حدث خطأ أثناء جلب البيانات');
-                console.log('Error fetching data');
+                setInputValues(initialInputValues);
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء جلب البيانات');
-            toast.error('حدث خطأ أثناء جلب البيانات');
-            console.log('Error:', error);
+            MySwal.fire('Error', `${error}`, 'error');
+            console.error('Error:', error);
             setLoading(false);
         },
     });
+
     useEffect(() => {
-        setLoading(true);
         fetchSchedulesAvailable();
     }, []);
+
     const { mutate: createListPrice } = useMutation({
         mutationFn: createPriceSchedule,
+        onMutate: () => setLoading(true),
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                fetchSchedulesAvailable()
-                toast.success('تم التسعير بنجاح')
+                fetchSchedulesAvailable();
+                Swal.fire(
+                    'تم!',
+                    'تم التسعير بنجاح.',
+                    'success'
+                );
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء  التسعير  ');
-            toast.error('حدث خطأ أثناء  التسعير:');
-            console.log('Error:', error);
+            MySwal.fire('Error', `${error}`, 'error');
+            console.error('Error:', error);
             setLoading(false);
         },
     });
+
     const { mutate: enableProduct } = useMutation({
         mutationFn: changeScheduleEn,
+        onMutate: () => setLoading(true),
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                fetchSchedulesAvailable()
-                toast.success('تم تفعيل المنتج  ')
+                fetchSchedulesAvailable();
+                MySwal.fire('Success', 'تم تفعيل المنتج', 'success');
             } else {
-                setError('حدث خطأ تفعيل أثناء المنتج  ');
-                console.log('Error fetching data');
-
+                MySwal.fire('Error', { error }, 'error');
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء تفعيل المنتج  ');
-            toast.error('حدث خطأ أثناء تفعيل المنتج  ');
-            console.log('Error:', error);
+            MySwal.fire('Error', 'حدث خطأ أثناء تفعيل المنتج', 'error');
+            console.error('Error:', error);
             setLoading(false);
         },
     });
+
     const { mutate: disableProduct } = useMutation({
         mutationFn: changeScheduleDis,
+        onMutate: () => setLoading(true),
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                fetchSchedulesAvailable()
-                toast.success('تم تعطيل المنتج  ')
+                fetchSchedulesAvailable();
+                MySwal.fire('Success', 'تم تعطيل المنتج', 'success');
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء تعطيل المنتج');
-            toast.error('حدث خطأ أثناء تعطيل المنتج');
-            console.log('Error:', error);
+            MySwal.fire('Error', `${error}`, 'error');
+            console.error('Error:', error);
             setLoading(false);
         },
     });
+
+    const { mutate: deleteProduct } = useMutation({
+        mutationFn: deleteSchedule,
+        onMutate: () => setLoading(true),
+        onSuccess: (res: any) => {
+            if (res.status === 200) {
+                fetchSchedulesAvailable();
+                MySwal.fire('Success', 'تم حذف المنتج بنجاح', 'success');
+            }
+            setLoading(false);
+        },
+        onError: (error: any) => {
+            MySwal.fire('Error', { error }, 'error');
+            console.error('Error:', error);
+            setLoading(false);
+        },
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('reservation_type_id', params.scheduleID);
-        scheduleAvailable?.ymtazPrices?.forEach(price => {
-            formData.append(`reservationsTypesImportances[${price.id}][importance_id]`, price.level.id);
-            formData.append(`reservationsTypesImportances[${price.id}][price]`, inputValues[price.id] || price.price);
-            formData.append(`reservationsTypesImportances[${price.id}][isHidden]`, (visibility[`${price.id}`] ? 1 : 0).toString());
+        priceList?.forEach(price => {
+            formData.append(`reservationsTypesImportances[${price.level.id}][importance_id]`, price.level.id);
+            formData.append(`reservationsTypesImportances[${price.level.id}][price]`, inputValues[price.level.id] || price.price);
+            formData.append(`reservationsTypesImportances[${price.level.id}][isHidden]`, (visibility[price.level.id] ? 0 : 1).toString());
         });
-
-        createListPrice(formData)
+        createListPrice(formData);
     };
 
     const handleInputChange = (id, value) => {
         setInputValues((prevValues) => ({
             ...prevValues, [id]: value
-        }))
-    }
+        }));
+    };
+
     const handleClick = (e, id) => {
         e.preventDefault();
         setVisibility(prev => ({
             ...prev,
             [id]: !prev[id]
         }));
-        console.log(visibility)
     };
 
     const handleEnableProduct = () => {
-        const id = params.scheduleID
         Swal.fire({
             title: 'هل أنت متأكد؟',
             text: "هل تريد تفعيل المنتج؟",
@@ -143,13 +169,12 @@ function ScheduleCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                enableProduct(id);
-                fetchSchedulesAvailable();
+                enableProduct(params.scheduleID);
             }
         });
     };
+
     const handleDisableProduct = () => {
-        const id = params.scheduleID
         Swal.fire({
             title: 'هل أنت متأكد؟',
             text: "هل تريد تعطيل المنتج؟",
@@ -161,38 +186,15 @@ function ScheduleCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                disableProduct(id);
-                fetchSchedulesAvailable()
+                disableProduct(params.scheduleID);
             }
         });
     };
 
-    const { mutate: deleteProduct } = useMutation({
-        mutationFn: deleteSchedule,
-        onMutate: () => {
-            setLoading(true);
-            setError(null);
-        },
-        onSuccess: (res: any) => {
-            if (res.status === 200) {
-                fetchSchedulesAvailable()
-                toast.success('تم حذف المنتج بنجاح');
-                setError(null);
-            }
-            setLoading(false);
-        },
-        onError: (error: any) => {
-            toast.error('حدث خطأ أثناء حذف المنتج');
-            console.log('Error:', error);
-            setLoading(false);
-        },
-    });
-
     const handleDeleteProduct = () => {
-        const id = params?.scheduleID;
         Swal.fire({
             title: "حذف المنتج!",
-            text: " اذا تم حذف المنتج لن تكون قادر على استرجاعها مره اخري",
+            text: "اذا تم حذف المنتج لن تكون قادر على استرجاعها مره اخري",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#E52F4F',
@@ -201,27 +203,47 @@ function ScheduleCustomizePage({ params }) {
             cancelButtonText: 'إلغاء',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteProduct(id);
-                fetchSchedulesAvailable();
-                {
-                    !error && Swal.fire(
-                        'تم!',
-                        'تم حذف المنتج.',
-                        'success'
-                    );
-                }
+                deleteProduct(params.scheduleID);
             }
         });
     };
-
+    if (loading) return (
+        <div className="flex justify-center items-center min-h-screen">
+            <div className="flex flex-col items-center">
+                <svg
+                    className="animate-spin h-8 w-8 text-blue-600 mb-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                    ></path>
+                </svg>
+                <p className="text-blue-600 font-semibold">جاري تحميل البيانات...</p>
+            </div>
+        </div>
+    );
     return (
-        <div className="container mx-auto min-h-screen">
-            <SecondHead title="تخصيص المنتج" />
+        <motion.div className="container mx-auto min-h-screen" initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}>
+            <SecondHead title="تخصيص المواعيد" />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="hidden md:block col p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
                     <h3 className="text-[#00262F] text-base leading-8 font-[700]">{scheduleAvailable?.name} </h3>
-                    <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
-                    <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {scheduleAvailable?.name} </p>
+                    {/* <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
+                    <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {scheduleAvailable?.details} </p> */}
                     <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
                     <h3 className="text-[#00262F] text-sm leading-6 font-[600]">تسعير المنتج</h3>
                     <div className="flex justify-start items-center gap-5 my-3">
@@ -230,7 +252,7 @@ function ScheduleCustomizePage({ params }) {
                     </div>
                     <div>
                         {
-                            !scheduleAvailable?.is_activated == false && <div>
+                            scheduleAvailable?.is_activated && <div>
                                 <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
                                 <div className="flex flex-col items-start justify-between gap-6 text-sm font-semibold leading-8 text-[#00262F]">
                                     <div className="flex items-center gap-3">
@@ -252,22 +274,22 @@ function ScheduleCustomizePage({ params }) {
                 <div className=" hidden md:block col px-5 ">
                     <form action="" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6 p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
-                            {scheduleAvailable?.ymtazPrices ? scheduleAvailable?.ymtazPrices.map((price) => (
-                                <div key={price.id} className="flex justify-between items-center">
+                            {priceList ? priceList.map((price) => (
+                                <div key={price.level.id} className="flex justify-between items-center">
                                     <div className="flex justify-between items-center gap-3">
                                         <button
                                             type="button"
-                                            onClick={(e) => handleClick(e, price.id)}
-                                            className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
+                                            onClick={(e) => handleClick(e, price.level.id)}
+                                            className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility && !visibility[price.level.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
                                         >
                                             <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
                                         </button>
-                                        <span>{price.level.name}</span>
+                                        <span>{price.level?.name}</span>
                                     </div>
                                     <input
                                         type="text"
-                                        value={inputValues[price.id] || ''}
-                                        onChange={(e) => { handleInputChange(price.id, e.target.value) }}
+                                        value={inputValues[price.level.id] || ''}
+                                        onChange={(e) => { handleInputChange(price.level.id, e.target.value) }}
                                         className="border border-[#E6E6E6] rounded-lg   p-3"
                                         placeholder={`    ر.س ${price.price}`}
                                     />
@@ -285,8 +307,8 @@ function ScheduleCustomizePage({ params }) {
                 <div className="block md:hidden  ">
                     <div className="col  p-6 bg-[#FFFFFF] shadow-4 rounded-lg  " >
                         <h3 className="text-[#00262F] text-base leading-8 font-[700]">{scheduleAvailable?.name} </h3>
-                        <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
-                        <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {scheduleAvailable?.name} </p>
+                        {/* <h6 className="text-[#A6A4A4] font-[400] text-[12px] leading-[22px]">وصف المنتج</h6>
+                        <p className="text-[#A6A4A4] font-[600] text-justify text-sm leading-[22px]"> {scheduleAvailable?.name} </p> */}
                         <div className="w-[75%] h-[1px] mx-auto my-5 bg-[#E9ECF2]"></div>
                         <h3 className="text-[#00262F] text-sm leading-6 font-[600]">تسعير المنتج</h3>
                         <div className="flex justify-start items-center gap-5 my-3">
@@ -297,13 +319,13 @@ function ScheduleCustomizePage({ params }) {
                     <div className="col md:px-6  ">
                         <form action="" onSubmit={handleSubmit}>
                             <div className="flex mt-4 flex-col gap-6 p-6 bg-[#FFFFFF] shadow-4 rounded-lg  ">
-                                {scheduleAvailable?.ymtazPrices ? scheduleAvailable?.ymtazPrices.map((price) => (
+                                {priceList ? priceList.map((price) => (
                                     <div key={price.id} className="flex-col  justify-between items-center">
                                         <div className="flex justify-between items-center gap-3">
                                             <button
                                                 type="button"
-                                                onClick={(e) => handleClick(e, price.id)}
-                                                className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility[price.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
+                                                onClick={(e) => handleClick(e, price.level.id)}
+                                                className={`font-bold w-[50px] h-fit outline-none rounded-xl flex custom-inset-1 custom-inset-2 items-center ${visibility && !visibility[price.level.id] ? 'bg-[#DDB762] justify-end' : 'bg-[#F8F8F8]'} hover:bg-opacity-80 focus:outline-none justify-start`}
                                             >
                                                 <div className='w-6 h-6 rounded-xl bg-[#ECECEF]'></div>
                                             </button>
@@ -340,7 +362,7 @@ function ScheduleCustomizePage({ params }) {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

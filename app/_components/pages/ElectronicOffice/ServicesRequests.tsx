@@ -1,12 +1,20 @@
 'use client'
+
 import { getListServicesFromClient, getListServicesFromDigitalGuide } from '@/app/_api/queries/office.query';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
 import { useMutation } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
+import emptyStateImg from '@/public/publicImage/empty-box.png';
+
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 type TabType = string;
 
@@ -25,26 +33,21 @@ function ServiceRequests() {
     DigitalGuide: "الدليل الرقمي",
   };
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [clientsReservations, setClientsReservations] = useState<any>(null);
-  const [digitalReservations, setDigitalReservations] = useState<any>(null);
+  const [clientsReservations, setClientsReservations] = useState<any[]>([]);
+  const [digitalReservations, setDigitalReservations] = useState<any[]>([]);
 
   const { mutate: fetchServicesFromDigitalGuide } = useMutation({
     mutationFn: getListServicesFromDigitalGuide,
     onSuccess: (res: any) => {
       if (res.status === 200) {
-        setDigitalReservations(res.data.data.service_requests);
-        console.log('Data fetched successfully', digitalReservations);
+        setDigitalReservations(res.data.data.service_requests || []);
       } else {
-        setError('حدث خطأ أثناء جلب البيانات');
-        console.log('Error fetching data');
+        handleError();
       }
       setLoading(false);
     },
-    onError: (error: any) => {
-      setError('حدث خطأ أثناء جلب البيانات');
-      toast.error('حدث خطأ أثناء جلب البيانات');
-      console.log('Error:', error);
+    onError: () => {
+      handleError();
       setLoading(false);
     },
   });
@@ -53,21 +56,25 @@ function ServiceRequests() {
     mutationFn: getListServicesFromClient,
     onSuccess: (res: any) => {
       if (res.status === 200) {
-        setClientsReservations(res.data.data.service_requests);
-        console.log('Data fetched successfully', clientsReservations);
+        setClientsReservations(res.data.data.service_requests || []);
       } else {
-        setError('حدث خطأ أثناء جلب البيانات');
-        console.log('Error fetching data');
+        handleError();
       }
       setLoading(false);
     },
-    onError: (error: any) => {
-      setError('حدث خطأ أثناء جلب البيانات');
-      toast.error('حدث خطأ أثناء جلب البيانات');
-      console.log('Error:', error);
+    onError: () => {
+      handleError();
       setLoading(false);
     },
   });
+
+  const handleError = () => {
+    MySwal.fire({
+      icon: 'error',
+      title: 'خطأ',
+      text: 'حدث خطأ أثناء جلب البيانات',
+    });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -75,8 +82,33 @@ function ServiceRequests() {
     fetchServicesFromClients();
   }, [fetchServicesFromDigitalGuide, fetchServicesFromClients]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="flex flex-col items-center">
+        <svg
+          className="animate-spin h-8 w-8 text-blue-600 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+        <p className="text-blue-600 font-semibold">جاري تحميل البيانات...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className='container mx-auto min-h-screen'>
@@ -86,10 +118,15 @@ function ServiceRequests() {
         setActiveTab={setActiveTab}
         buttonTitles={buttonTitles}
       />
-      {activeTab === 'DigitalGuide' ?
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4 justify-center py-3 md:py-6">
-          {digitalReservations?.map((reservation: any) => (
-            <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/Reply_Lawyer_Service/${reservation.id}`}>
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4 justify-center py-3 md:py-6"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, staggerChildren: 0.1 }}
+      >
+        {activeTab === 'DigitalGuide' ? (digitalReservations.length > 0 ? (digitalReservations.map((reservation: any) => (
+          <motion.div key={reservation.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Link href={`/ElectronicOffice/serviceRequest/Reply_Lawyer_Service/${reservation.id}`}>
               <RequestConsultationCard
                 status={statusMapping[reservation.request_status] || 'غير محدد'}
                 title={reservation.service.title}
@@ -101,11 +138,17 @@ function ServiceRequests() {
                 senderImage={reservation.requesterLawyer.photo}
               />
             </Link>
-          ))}
-        </div> :
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[25px] gap-y-4 justify-center py-3 md:py-6">
-          {clientsReservations?.map((reservation: any) => (
-            <Link key={reservation.id} href={`/ElectronicOffice/serviceRequest/Reply_Client_Service/${reservation.id}`}>
+          </motion.div>
+        ))
+        ) : (
+          <div className="flex col-span-4 flex-col items-center justify-center min-h-[50vh]">
+            <Image src={emptyStateImg} alt="No Data" className="w-52 h-52 mb-4" />
+            <p className="text-lg font-semibold text-gray-500">لا يوجد طلبات للعرض</p>
+          </div>
+        )
+        ) : (clientsReservations.length > 0 ? (clientsReservations.map((reservation: any) => (
+          <motion.div key={reservation.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Link href={`/ElectronicOffice/serviceRequest/Reply_Client_Service/${reservation.id}`}>
               <RequestConsultationCard
                 status={statusMapping[reservation.request_status] || 'غير محدد'}
                 title={reservation.service.title}
@@ -117,8 +160,16 @@ function ServiceRequests() {
                 senderImage={reservation.lawyer.photo}
               />
             </Link>
-          ))}
-        </div>}
+          </motion.div>
+        ))
+        ) : (
+          <div className="flex col-span-4 flex-col items-center justify-center min-h-[50vh]">
+            <Image src={emptyStateImg} alt="No Data" className="w-52 h-52 mb-4" />
+            <p className="text-lg font-semibold text-gray-500">لا يوجد طلبات للعرض</p>
+          </div>
+        ))
+        }
+      </motion.div>
     </div>
   );
 }

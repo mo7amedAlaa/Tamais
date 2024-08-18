@@ -1,5 +1,4 @@
 import flagIcon from "@/public/Icons/flag.svg";
-import loctionIcon from "@/public/Icons/loction.svg";
 import Image from "next/image";
 import React from "react";
 
@@ -19,8 +18,8 @@ const RequestClient: React.FC<RequestClientProps> = ({
   clientLocation,
 }) => {
   return (
-    <div className="p-6 w-full bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px]">
-      <div className="flex">
+    <div className="p-5 w-full bg-[#FFFFFF] rounded-[12px] shadow-lg text-[12px] leading-[22.49px]">
+      <div className="flex items-start justify-between gap-2">
         <div>
           <Image
             src={clientImage}
@@ -30,18 +29,18 @@ const RequestClient: React.FC<RequestClientProps> = ({
             height={50}
           />
         </div>
-        <div className="flex-1 p-3">
-          <h3 className="text-[#00262F] font-[600] text-[14px] leading-[9px] text-right mb-3">
+        <div className="flex-1 p-3 flex flex-col justify-between items-start  gap-6  ">
+          <h3 className="text-[#00262F] font-[600] text-[18px] leading-[9px] text-right  ">
             {clientName}
           </h3>
-          <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right mb-4 gap-1">
-            <Image src={flagIcon} alt="Flag"   />
+          <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right  gap-1">
+            <Image src={flagIcon} alt="Flag" />
             {clientCountry}
           </div>
-          <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right gap-1">
+          {/* <div className="flex text-[#A6A4A4] font-[600] text-[14px] leading-[9px] text-right gap-1">
             <Image src={loctionIcon} alt="Location"    />
             {clientLocation}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

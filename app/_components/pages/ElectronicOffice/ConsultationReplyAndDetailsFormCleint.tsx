@@ -12,6 +12,7 @@ import priceIcon from '@/public/Icons/price.svg';
 import star from '@/public/Icons/star.svg';
 import { useMutation } from '@tanstack/react-query';
 import Image from "next/image";
+import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import toast from "react-hot-toast";
 
@@ -29,6 +30,8 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
     const [clientsReservations, setClientsReservations] = useState<any[]>([]);
     const [reservation, setReservation] = useState<any | null>(null);
 
+    const router = useRouter(); // Initialize useRouter
+
     const steps = [
         { label: 'قيد الدراسة', status: 1 },
         { label: 'قيد الانتظار', status: 2 },
@@ -42,10 +45,11 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
                 setClientsReservations(res.data.data.reservations);
                 const foundReservation = res.data.data.reservations.find((item: any) => item.id == consultID);
                 setReservation(foundReservation);
+                if (!foundReservation) {
+                    router.push('/ElectronicOffice/consultationsRequest');
+                    toast.error('something Went To Error')
+                }
                 console.log('Data fetched successfully', res.data.data.reservations);
-            } else {
-                setError('حدث خطأ أثناء جلب البيانات');
-                console.log('Error fetching data');
             }
             setLoading(false);
         },
@@ -178,35 +182,29 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
                             <div className='flex items-center justify-between flex-1'>
                                 <div className="text-[12px] text-[#A6A4A4] flex items-center font-[600] leading-[22.49px] gap-2 text-right">
                                     <Image src={date} alt="date-icon" />
-                                    تاريخ الطلب
+                                    تاريخ الاستشارة
                                 </div>
-                                <div className="text-[12px] font-[600] leading-[16px] text-[#00262F]">  {new Date(reservation?.created_at).toLocaleDateString('ar-US')}</div>
+                                <div className="text-[12px] font-[600] leading-[16px] text-[#00262F]">{reservation?.date}</div>
                             </div>
                             <div className='flex items-center justify-between flex-1'>
                                 <div className="text-[12px] text-[#A6A4A4] flex items-center font-[600] leading-[22.49px] gap-2 text-right">
-                                    <Image src={important} alt="date-icon" />
-                                    مستوى الطلب
+                                    <Image src={important} alt="important-icon" />
+                                    حالة الاستشارة
                                 </div>
-                                <div className="text-[12px] font-[600] leading-[16px] text-[#00262F]">{reservation?.importance.title}</div>
+                                <Steps steps={steps} currentStatus={reservation?.status} />
                             </div>
-                        </div>
-                        <div className="w-[80%] h-[1px] bg-[#E9ECF2] m-auto my-3"></div>
-                        <h3 className="p-2 text-[#A6A4A4]">الوصف</h3>
-                        <p className="text-justify text-xs leading-5 font-semibold text-[#1D1E25]">
-                            {reservation?.description}
-                        </p>
-                    </div>
-                    <div>
-                        <h3 className="m-3 text-[#A6A4A4]">تفاصيل الرد على الاستشارة</h3>
-                        <Steps status={reservation?.request_status || 2} />
-                        <div className="h-[60px] bg-[#FFFFFF] px-6 rounded-xl shadow-xl flex justify-between items-center">
-                            <div className="flex gap-2 items-center">
-                                <Image src={pdfIcon} alt='pdfImage' />
-                                <span className="text-[14px] font-[600] leading-8 text-[#00262F]">تصميم العقود.PDF</span>
+                            <div className='flex items-center justify-between flex-1'>
+                                <div className="text-[12px] text-[#A6A4A4] flex items-center font-[600] leading-[22.49px] gap-2 text-right">
+                                    <Image src={pdfIcon} alt="pdf-icon" />
+                                    استلام الملف
+                                </div>
+
+                                <a className="text-[#DDB762] flex justify-start items-center gap-3">
+                                    <Image src={downloadIcon} alt="download-icon" />
+                                    تحميل
+                                </a>
+
                             </div>
-                            <button>
-                                <Image src={downloadIcon} alt='downloadIcon' />
-                            </button>
                         </div>
                     </div>
                 </div>
