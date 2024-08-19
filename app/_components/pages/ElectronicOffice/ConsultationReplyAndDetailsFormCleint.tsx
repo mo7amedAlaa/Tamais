@@ -2,7 +2,6 @@
 
 import { getListReservedFromClient, replyTpConsultationFromClient } from "@/app/_api/queries/office.query";
 import SecondHead from "@/app/_components/ui/SecondHead";
-import Steps from "@/app/_components/ui/Steps";
 import date from '@/public/Icons/date.svg';
 import downloadIcon from '@/public/Icons/downloadIcon.svg';
 import FolderIcon from "@/public/Icons/folder.svg";
@@ -11,33 +10,43 @@ import pdfIcon from '@/public/Icons/pdfIcon.svg';
 import priceIcon from '@/public/Icons/price.svg';
 import star from '@/public/Icons/star.svg';
 import { useMutation } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import Image from "next/image";
-import Link from "next/link";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import toast from "react-hot-toast";
+import { MdOutlineQuickreply } from "react-icons/md";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 interface PropsIN {
     consultID: string;
 }
 
+const statusMapping: Record<number, string> = {
+    1: 'جديد',
+    2: 'انتظار',
+    3: 'متأخر',
+    4: 'غير منجز',
+    5: 'مكتملة'
+};
+
+const MySwal = withReactContent(Swal);
+
 const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => {
     const [response, setResponse] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
     const [responseError, setResponseError] = useState<string | null>(null);
     const [fileChosen, setFileChosen] = useState<boolean>(false);
     const [clientsReservations, setClientsReservations] = useState<any[]>([]);
     const [reservation, setReservation] = useState<any | null>(null);
 
-    const steps = [
-        { label: 'قيد الدراسة', status: 1 },
-        { label: 'قيد الانتظار', status: 2 },
-        { label: 'مكتملة', status: 5 },
-    ];
+
 
     const { mutate: fetchReservationsFromClients } = useMutation({
         mutationFn: getListReservedFromClient,
+        onMutate: () => {
+            setLoading(true)
+        },
         onSuccess: (res: any) => {
             if (res.status === 200) {
                 setClientsReservations(res.data.data.reservations);
@@ -45,14 +54,23 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
                 setReservation(foundReservation);
                 console.log('Data fetched successfully', res.data.data.reservations);
             } else {
-                setError('حدث خطأ أثناء جلب البيانات');
+                MySwal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'حدث خطأ أثناء جلب البيانات',
+                    confirmButtonText: 'حسنًا'
+                });
                 console.log('Error fetching data');
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء جلب البيانات');
-            toast.error('حدث خطأ أثناء جلب البيانات');
+            MySwal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: 'حدث خطأ أثناء جلب البيانات',
+                confirmButtonText: 'حسنًا'
+            });
             console.log('Error:', error);
             setLoading(false);
         },
@@ -62,23 +80,35 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
         mutationFn: replyTpConsultationFromClient,
         onMutate: () => {
             setLoading(true);
-            setError(null);
         },
         onSuccess: (res: any) => {
             if (res.status === 200) {
-                toast.success(res.message);
+                MySwal.fire({
+                    icon: 'success',
+                    title: 'نجاح',
+                    text: res.message,
+                    confirmButtonText: 'حسنًا'
+                });
                 setResponse('');
                 setFile(null);
                 setFileChosen(false);
-                setError(null);
             } else {
-                setError('حدث خطأ أثناء ارسال الرد');
+                MySwal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'حدث خطأ أثناء ارسال الرد',
+                    confirmButtonText: 'حسنًا'
+                });
             }
             setLoading(false);
         },
         onError: (error: any) => {
-            setError('حدث خطأ أثناء ارسال الرد');
-            toast.error('حدث خطأ أثناء ارسال الرد');
+            MySwal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: 'حدث خطأ أثناء ارسال الرد',
+                confirmButtonText: 'حسنًا'
+            });
             console.log('Error:', error);
             setLoading(false);
         },
@@ -121,18 +151,83 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
         }
         replyReservationsFromClients(formData);
     };
+    if (loading) return (
+        <motion.div
+            className="flex justify-center items-center min-h-screen"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+        >
+            <div className="flex flex-col items-center">
+                <svg
+                    className="animate-spin h-8 w-8 text-blue-600 mb-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                    ></circle>
+                    <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8H4z"
+                    ></path>
+                </svg>
+                <p className="text-blue-600 font-semibold">جاري تحميل البيانات...</p>
+            </div>
+        </motion.div>
+    );
+
+
 
     return (
-        <div className="container mx-auto px-5">
+        <div className="container mx-auto px-4  sm:px-6 lg:px-8">
             <SecondHead title="تفاصيل الاستشارة" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
-                <form onSubmit={handleSubmit} className="col bg-[#FFFFFF] rounded-[12px] px-6 shadow-lg max-h-[482px]">
-                    <p className="text-[12px] font-[600] leading-[30px] text-[#A6A4A4] p-2">الرد على الاستشارة</p>
-                    <div>
+            <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6" initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}>
+                <form onSubmit={handleSubmit} className="col w-full p-2   bg-[#FFFFFF] rounded-[12px] lg:px-6 shadow-lg max-h-[482px]"
+                >
+                    {reservation?.reply ? <div><div className="col lg:px-6 h-[482px] space-y-4">
+                        <p className="text-[12px] text-center font-[600] leading-[30px] text-[#A6A4A4] p-2 mb-5 ">لقد قمت بالرد على الاستشارة مسبقا</p>
+
+                        <div className="rounded-lg shadow-lg p-2 lg:p-6 bg-white max-h-[400px]">
+                            <h3 className="mb-6 text-[#A6A4A4]">الرد على الاستشارة</h3>
+                            <div className="text-justify text-base leading-5 font-semibold text-[#00262F]">
+                                {reservation?.reply}
+                            </div>
+                        </div>
+
+                        <div className="bg-[#FFFFFF] rounded-[12px] p-2 lg:px-6 shadow-lg max-h-[482px]">
+                            <h3 className="m-3 text-[#A6A4A4]">المرفقات</h3>
+                            <div className="h-[60px] bg-[#FFFFFF] px-6 rounded-xl flex justify-between items-center">
+                                <div className="flex gap-2 items-center">
+                                    <Image src={pdfIcon} alt='pdfImage' />
+                                    <span className="text-[14px] font-[600] leading-8 text-[#00262F]">
+                                        {reservation?.file ? reservation.file.split('/').pop() : 'لا يوجد مرفقات'}
+                                    </span>
+                                </div>
+                                {reservation?.file && (
+                                    <a href={`${reservation.file}`} download>
+                                        <Image src={downloadIcon} alt='downloadIcon' />
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+
+                    </div></div> : <div>
+                        <p className="text-[12px] font-[600] leading-[30px] text-[#A6A4A4] p-2 mb-1">الرد على الاستشارة</p>
+
                         <textarea
                             value={response}
                             onChange={handleResponseChange}
-                            className="w-full resize-none outline-none py-2 px-3 border border-[#E6E6E6] h-[205px] rounded-[12px]"
+                            className="w-full   resize-none outline-none py-2 px-3 border border-[#E6E6E6] h-[205px] rounded-[12px]"
                             placeholder="الرد..."
                         ></textarea>
                         {responseError && (
@@ -153,13 +248,12 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
                         >
                             {loading ? 'جاري الإرسال...' : 'ارسال الرد'}
                         </button>
-                        {error && (
-                            <p className="text-red-500 text-xs mt-1">{error}</p>
-                        )}
-                    </div>
+
+                    </div>}
+
                 </form>
-                <div className="col px-6 h-[482px]">
-                    <div className="rounded-lg shadow-lg p-6 bg-white max-h-[400px]">
+                <div className="col  lg:px-6 h-[482px] space-y-4">
+                    <div className="rounded-lg shadow-lg p-2 lg:p-6 bg-white max-h-[400px] ">
                         <h3 className="mb-6 text-[#A6A4A4]">تفاصيل الاستشارة</h3>
                         <div className="flex flex-col pb-2 mb-2 flex-1 justify-center gap-2">
                             <div className='flex items-center justify-between flex-1'>
@@ -197,22 +291,34 @@ const ConsultationReplyAndDetailsClient: React.FC<PropsIN> = ({ consultID }) => 
                             {reservation?.description}
                         </p>
                     </div>
-                    <div>
+                    <div className="  bg-[#FFFFFF] rounded-[12px] p-2 lg:px-6 shadow-lg max-h-[482px]">
                         <h3 className="m-3 text-[#A6A4A4]">تفاصيل الرد على الاستشارة</h3>
-                        <Steps status={reservation?.request_status || 2} />
-                        <div className="h-[60px] bg-[#FFFFFF] px-6 rounded-xl shadow-xl flex justify-between items-center">
+                        <div className="flex item-center justify-between">
+                            <div className="flex items-center gap-2 font-[600] text-[14px] text-[#A6A4A4]">
+                                <MdOutlineQuickreply className="text-[#DDB762] mx-2 h-4 w-4 " /> حالة الرد
+                            </div>
+                            <div className={`p-3 rounded-md text-[14px] font-semibold leading-5 tracking-wide   ${reservation?.request_status == 5 ? 'bg-green-500' : 'bg-gray'}`}>
+                                {statusMapping[reservation?.request_status]}
+                            </div>
+                        </div>
+                        <div className="h-[60px] bg-[#FFFFFF] px-6 rounded-xl     flex justify-between items-center">
                             <div className="flex gap-2 items-center">
                                 <Image src={pdfIcon} alt='pdfImage' />
-                                <span className="text-[14px] font-[600] leading-8 text-[#00262F]">تصميم العقود.PDF</span>
+                                <span className="text-[14px] font-[600] leading-8 text-[#00262F]">
+                                    {reservation?.file ? reservation.file.split('/').pop() : 'لا يوجد مرفقات'}
+                                </span>
                             </div>
-                            <Link href='https://api.ymtaz.sa/uploads/advisory_services/replay_file/reservations/5ba6a25f2c28f4d84256b4033a36904a.svg'>
-                                <Image src={downloadIcon} alt='downloadIcon' />
-                            </Link>
+                            {reservation?.file && (
+                                <a href={`${reservation.file}`} download>
+                                    <Image src={downloadIcon} alt='downloadIcon' />
+                                </a>
+                            )}
                         </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </div >
     );
 };
 
