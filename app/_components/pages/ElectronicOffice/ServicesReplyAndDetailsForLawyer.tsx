@@ -148,7 +148,7 @@ const ServicesReplyAndDetailsLawyer: React.FC<PropsIN> = ({ servID }) => {
         if (file) {
             formData.append('reply_file', file);
         }
-        replyservicesFromDigitalGuide(formData);
+        replyServicesFromDigitalGuide(formData);
     };
     if (loading) return (
         <motion.div
