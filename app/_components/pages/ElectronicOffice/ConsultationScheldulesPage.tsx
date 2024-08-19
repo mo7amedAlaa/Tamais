@@ -91,7 +91,7 @@ function ConsultatSheldulersPage() {
     }
   };
 
-  const eventStyleGetter = (event: BigCalendarEvent) => {
+  const eventStyleGetter = (event: any) => {
     let backgroundColor = '#3174ad';
     if (event?.title === 'عطلة') {
       backgroundColor = '#f44336';
