@@ -93,9 +93,9 @@ function ConsultatSheldulersPage() {
 
   const eventStyleGetter = (event: BigCalendarEvent) => {
     let backgroundColor = '#3174ad';
-    if (event.title === 'عطلة') {
+    if (event?.title === 'عطلة') {
       backgroundColor = '#f44336';
-    } else if (event.title.includes('اجتماع')) {
+    } else if (event?.title.includes('اجتماع')) {
       backgroundColor = '#4caf50';
     }
 
@@ -144,11 +144,7 @@ function ConsultatSheldulersPage() {
           toolbar={false}
           messages={{
             week: 'أسبوع',
-            day: 'يوم',
-            month: 'شهر',
-            showMore: (total) => `+ عرض المزيد (${total})`,
           }}
-          days={['Monday', 'Tuesday', 'Wednesday', 'Thursday']}
         />
       </div>
     </div>
