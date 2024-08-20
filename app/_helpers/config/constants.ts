@@ -68,9 +68,16 @@ export const API_ENDPOINTS = {
 	APPOINT_REPLY_Lawyer:'lawyer/advisory-services/requested/reply/client',
 	CONSULTATION_CREATE_PRICES:'lawyer/advisory-services/createPrice',
 	SCHEDULE_CREATE_PRICES:'lawyer/reservations/pricing',
-	SERVICE_CREATE_PRICES:'lawyer/services-request/create'
+	SERVICE_CREATE_PRICES:'lawyer/services-request/create',
+	CLIENT_ANALYTICS:'v1/profile/my-page',//untill create
+	CLIENT_WALLET:"client/payouts/wallet",//untill create
+	 CLIENT_ADVISORY_DIGITAL:"client/advisory-services/digital-guide",
+	 CLIENT_ADVISORY_CLIENT:"client/advisory-services/ymtaz",
+	 CLIENT_APPOINTMENTS_DIGITAL:"client/reservations/lawyers",
+	 CLIENT_APPOINTMENTS_CLIENT:"client/reservations/clients",
+	 CLIENT_SERVICES_DIGITAL:"client/services-request/requested/lawyer",
+	 CLIENT_SERVICES_CLIENT:"client/services-request/requested/client",
 	 
-
 };
 export const PROFILE_TYPE = 'profileType';
 export const  LandingSections ={

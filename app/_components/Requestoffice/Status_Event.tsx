@@ -1,14 +1,14 @@
-// StutasAndEventColom.tsx
 'use client';
+
 import { useState } from "react";
-import ConsultationCard from '../pages/ElectronicOffice/ConsultationCard';
-import StatusCircle from '../pages/ElectronicOffice/StatusCircle';
-import ActiveTitleTab from "./ActiveTitleTab";
-import ThirdHead from './ThirdHead';
+import ConsultationCard from "../pages/ElectronicOffice/ConsultationCard";
+import ActiveTitleTab from "../ui/ActiveTitleTab";
+import ThirdHead from "../ui/ThirdHead";
+import StatusCircle from "./StatusCircle";
 
 type TabType = string;
 
-function StutasAndEventColom() {
+function Status_Event() {
   const [activeTab, setActiveTab] = useState<TabType>('advisoryServices');
 
   const buttonTitles = {
@@ -35,4 +35,4 @@ function StutasAndEventColom() {
   );
 }
 
-export default StutasAndEventColom;
+export default Status_Event;

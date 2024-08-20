@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/app/_helpers/config/constants";
 import { defaultAPI } from "../axios";
+ 
 export const analytics = async () => {
     const { data, status } = await defaultAPI.get(API_ENDPOINTS.LAWYER_ANALYTICS);
     return { data, status };
@@ -119,5 +120,41 @@ export const createPriceSchedule = async (formData:any) => {
 };
 export const createPriceService = async (formData:any) => {
     const { data, status } = await defaultAPI.post(API_ENDPOINTS.SERVICE_CREATE_PRICES,formData);
+    return { data, status };
+};
+export const analytics_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.CLIENT_ANALYTICS);
+    return { data, status };
+};
+export const getClients_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.LAWYER_CLIENT);
+    return { data, status };
+};
+export const getWallet_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.CLIENT_WALLET);
+    return { data, status };
+};
+export const getListReservedFromDigitalGuide_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.CLIENT_ADVISORY_DIGITAL);
+    return { data, status };
+};
+export const getListReservedFromClient_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.CLIENT_ADVISORY_CLIENT);
+    return { data, status };
+};
+export const getListAppointmentsFromDigitalGuide_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_APPOINTMENTS_DIGITAL);
+    return { data, status };
+};
+export const getListAppointmentsFromClient_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_APPOINTMENTS_CLIENT);
+    return { data, status };
+};
+export const getListServicesFromDigitalGuide_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_DIGITAL);
+    return { data, status };
+};
+export const getListServicesFromClient_Client = async () => {
+    const { data, status } = await defaultAPI.get(API_ENDPOINTS.ADVISORY_SERVICES_CLIENT);
     return { data, status };
 };

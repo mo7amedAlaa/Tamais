@@ -59,7 +59,7 @@ export default function RootLayout({
 					className={`${cairo.className} bg-white overflow-hidden text-black min-h-screen bg-gray-100 flex flex-col`}
 				>
 					<Header />
-					<main className="flex-1 p-6 mt-22">{children}</main>
+					<main className="flex-1 p-6 mt-12 ">{children}</main>
 					<Footer />
 				</div>
 			)}

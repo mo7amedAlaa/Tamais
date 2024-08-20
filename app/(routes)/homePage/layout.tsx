@@ -1,6 +1,4 @@
-import { Cairo, Inter } from 'next/font/google';
-import { Almarai } from 'next/font/google';
-import { Toaster } from 'react-hot-toast';
+import { Almarai, Cairo, Inter } from 'next/font/google';
 
 import Footer from '@/app/_components/pages/home/layout/footer/Footer';
 import Header from '@/app/_components/ui/Header';
@@ -17,10 +15,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className={`${cairo.className}  overflow-hidden text-black`}>
+		<div className={`${cairo.className}  overflow-hidden text-black  bg-whit min-h-screen bg-gray-100 flex flex-col`}>
 			<Header />
-			{children}
-			{/* <Footer /> */}
+			<main className="flex-1 p-6 mt-12 ">{children}</main>
+			<Footer />
 		</div>
 	);
 }

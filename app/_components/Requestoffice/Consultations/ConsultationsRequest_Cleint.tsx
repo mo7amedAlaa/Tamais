@@ -1,5 +1,5 @@
 'use client'
-import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
+import { getListReservedFromClient_Client, getListReservedFromDigitalGuide_Client } from '@/app/_api/queries/office.query';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
@@ -24,7 +24,7 @@ const statusMapping: Record<number, string> = {
   5: 'مكتملة'
 };
 
-function ConsultationsRequests() {
+function ConsultationsRequests_Client() {
   const [activeTab, setActiveTab] = useState<TabType>('Customers');
   const buttonTitles = {
     Customers: "العملاء",
@@ -44,7 +44,7 @@ function ConsultationsRequests() {
   };
 
   const { mutate: fetchReservationsFromDigitalGuide } = useMutation({
-    mutationFn: getListReservedFromDigitalGuide,
+    mutationFn: getListReservedFromDigitalGuide_Client,
     onSuccess: (res: any) => {
       if (res.status === 200) {
         setDigitalReservations(res.data.data.reservations || []);
@@ -63,7 +63,7 @@ function ConsultationsRequests() {
   });
 
   const { mutate: fetchReservationsFromClients } = useMutation({
-    mutationFn: getListReservedFromClient,
+    mutationFn: getListReservedFromClient_Client,
     onSuccess: (res: any) => {
       if (res.status === 200) {
         setClientsReservations(res.data.data.reservations || []);
@@ -156,7 +156,7 @@ function ConsultationsRequests() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <Link href={`/ElectronicOffice/consultationsRequest/Reply_Lawyer_Consultations/${reservation.id}`}>
+                <Link href={`/homePage/request_office/consultationsRequest/Reply_digital/${reservation.id}`}>
                   <RequestConsultationCard
                     status={statusMapping[reservation.request_status] || 'غير محدد'}
                     title={reservation.advisory_services_id.title}
@@ -164,8 +164,8 @@ function ConsultationsRequests() {
                     time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
                     importance={reservation.importance.title}
                     price={reservation.price}
-                    senderName={reservation.lawyer.name}
-                    senderImage={reservation.lawyer.photo}
+                    senderName={reservation?.lawyer?.name}
+                    senderImage={reservation?.lawyer?.photo}
                   />
                 </Link>
               </motion.div>
@@ -185,7 +185,7 @@ function ConsultationsRequests() {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}
               >
-                <Link href={`/ElectronicOffice/consultationsRequest/Reply_Cleint_Consultations/${reservation.id}`}>
+                <Link href={`/homePage/request_office/consultationsRequest/Reply_client/${reservation.id}`}>
                   <RequestConsultationCard
                     status={statusMapping[reservation.request_status] || 'غير محدد'}
                     title={reservation.advisory_services_id.title}
@@ -193,8 +193,8 @@ function ConsultationsRequests() {
                     time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
                     importance={reservation.importance.title}
                     price={reservation.price}
-                    senderName={reservation.lawyer.name}
-                    senderImage={reservation.lawyer.photo}
+                    senderName={reservation?.lawyer?.name}
+                    senderImage={reservation?.lawyer?.photo}
                   />
                 </Link>
               </motion.div>
@@ -211,4 +211,4 @@ function ConsultationsRequests() {
   );
 }
 
-export default ConsultationsRequests;
+export default ConsultationsRequests_Client;

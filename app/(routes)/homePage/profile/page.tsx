@@ -94,6 +94,12 @@ export default function Home() {
 								<p>  المكتب الالكتروني</p>
 							</Link>
 						)}
+						{userType == 'client' && (
+							<Link href={'/homePage/request_office'} className="flex flex-row gap-4 justify-start items-center hover:cursor-pointer">
+								< FaHeart />
+								<p>  مكتب الطلبات</p>
+							</Link>
+						)}
 						<div className="flex flex-row gap-4 justify-start items-center hover:cursor-pointer">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

@@ -1,23 +1,19 @@
 'use client';
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { GoHomeFill } from 'react-icons/go';
-import { FaUser } from 'react-icons/fa';
-import { FaUsers } from 'react-icons/fa';
-import { MdAccountBalanceWallet } from 'react-icons/md';
-import { FaRegBell } from 'react-icons/fa';
-import { MdSlowMotionVideo } from 'react-icons/md';
-import { FaBalanceScale } from 'react-icons/fa';
-import { LuLogOut } from 'react-icons/lu';
-import { IoBook } from 'react-icons/io5';
-import Link from 'next/link';
-import { FaChevronDown, FaChevronUp, FaRegHeart } from 'react-icons/fa6';
-import { useRouter } from 'next/navigation';
-import useUserProfile from '@/app/_helpers/hooks/useUserProfile';
-import Cookies from 'js-cookie';
 import { ACCESS_TOKEN, PROFILE_TYPE } from '@/app/_helpers/config/constants';
+import useUserProfile from '@/app/_helpers/hooks/useUserProfile';
 import { useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { FaBalanceScale, FaRegBell, FaUser, FaUsers } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaRegHeart } from 'react-icons/fa6';
+import { GoHomeFill } from 'react-icons/go';
 import { GrLanguage } from "react-icons/gr";
+import { IoBook } from 'react-icons/io5';
+import { LuLogOut } from 'react-icons/lu';
+import { MdAccountBalanceWallet, MdSlowMotionVideo } from 'react-icons/md';
 
 const Header = () => {
 	const [isOpen, setIsOpen] = React.useState(false);
@@ -25,10 +21,15 @@ const Header = () => {
 	const { data, isLoading, isError } = useUserProfile();
 	const router = useRouter();
 	const queryClient = useQueryClient();
-
 	const toggleDropdown = () => {
 		setIsDropdownOpen(!isDropdownOpen);
 	};
+	const [userType, setUserType] = useState<string>('');
+
+	useEffect(() => {
+		const storedUserType = localStorage.getItem(PROFILE_TYPE);
+		setUserType(storedUserType || '');
+	}, [userType]);
 	function signOut() {
 		localStorage.removeItem(PROFILE_TYPE);
 		localStorage.removeItem(ACCESS_TOKEN);
@@ -38,7 +39,7 @@ const Header = () => {
 		router.push('/auth/signin');
 	}
 	return (
-		<nav className="absolute [background:radial-gradient(50%_50%_at_50%_50%,_#033d4a,_#00262f)] w-full  z-40 shadow ">
+		<nav className=" absolute  [background:radial-gradient(50%_50%_at_50%_50%,_#033d4a,_#00262f)] w-full  z-40 shadow ">
 			<div className="container px-6 py-4 mx-auto">
 				<div className="lg:flex lg:items-center lg:justify-between">
 					<div className="flex items-center justify-between">
@@ -97,9 +98,8 @@ const Header = () => {
 
 					{/* Mobile Menu open: "block", Menu closed: "hidden" */}
 					<div
-						className={`${
-							isOpen ? 'opacity-100 translate-x-0' : 'hidden'
-						}  inset-x-0 z-20 px-6 py-4 transition-all duration-300 ease-in-out mt-5 bg-transparent text-white lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center`}
+						className={`${isOpen ? 'opacity-100 translate-x-0' : 'hidden'
+							}  inset-x-0 z-20 px-6 py-4 transition-all duration-300 ease-in-out mt-5 bg-transparent text-white lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center`}
 					>
 						<div className="flex text-black lg:text-[#DEDEDE] flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
 							<Link
@@ -162,7 +162,7 @@ const Header = () => {
 							<FaRegBell size="23px" />
 						</div>
 						<div className='cursor-pointer '>
-							<FaRegHeart  size="23px"  />
+							<FaRegHeart size="23px" />
 						</div>
 						<div className='cursor-pointer '>
 							<GrLanguage size="23px" />
@@ -195,13 +195,25 @@ const Header = () => {
 								</Link>
 
 								<hr className="border-slate-100" />
-								<Link
-									href="/ElectronicOffice"
-									className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
-								>
-									<FaBalanceScale size="18px" /> المكتب
-									الالكتروني
-								</Link>
+								{
+									userType === 'lawyer' && <Link
+										href="/ElectronicOffice"
+										className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+									>
+										<FaBalanceScale size="18px" /> المكتب
+										الالكتروني
+									</Link>
+								}
+								{
+									userType === 'client' && <Link
+										href="/homePage/request_office"
+										className="px-3 py-2 flex items-center text-[#405B61] text-[12px] font-[600] hover:text-[#658D96] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
+									>
+										<FaBalanceScale size="18px" />
+										مكتب الطلبات
+									</Link>
+								}
+
 								<Link
 									href="#"
 									className="px-3 py-2 flex items-center hover:text-[#658D96] text-[#405B61] text-[12px] font-[600] hover:underline-offset-[3px]  gap-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 "
