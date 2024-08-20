@@ -149,7 +149,7 @@ const ServicesReplyAndDetailsClient: React.FC<PropsIN> = ({ servID }) => {
         if (file) {
             formData.append('reply_file', file);
         }
-        replyServicesFromDigitalGuide(formData);
+        replyServicesClient(formData);
     };
     if (loading) return (
         <motion.div
