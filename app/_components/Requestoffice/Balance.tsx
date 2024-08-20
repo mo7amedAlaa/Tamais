@@ -13,7 +13,7 @@ const MySwal = withReactContent(Swal);
 
 const Balance: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
   const [wallet, setWallet] = useState<any>(null);
 
   const { mutate } = useMutation({
