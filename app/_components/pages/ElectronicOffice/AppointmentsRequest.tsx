@@ -167,18 +167,18 @@ function AppointmentsRequests() {
             <motion.div key={reservation.id} initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.3 }}>
-              <Link href={`/ElectronicOffice/appointmentsRequest/${reservation.id}`}>
-                <RequestConsultationCard
-                  status={statusMapping[reservation.request_status] || 'غير محدد'}
-                  title={reservation.reservationType.name}
-                  date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
-                  time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
-                  importance={reservation.reservationImportance.name}
-                  price={reservation.price}
-                  senderName={reservation.reservedFromLawyer.name}
-                  senderImage={reservation.reservedFromLawyer.photo}
-                />
-              </Link>
+
+              <RequestConsultationCard
+                status={statusMapping[reservation.request_status] || 'غير محدد'}
+                title={reservation.reservationType.name}
+                date={new Date(reservation.created_at).toLocaleDateString('ar-US')}
+                time={new Date(reservation.created_at).toLocaleTimeString('ar-US')}
+                importance={reservation.reservationImportance.name}
+                price={reservation.price}
+                senderName={reservation.reservedFromLawyer.name}
+                senderImage={reservation.reservedFromLawyer.photo}
+              />
+
             </motion.div>
           ))
           ) : (

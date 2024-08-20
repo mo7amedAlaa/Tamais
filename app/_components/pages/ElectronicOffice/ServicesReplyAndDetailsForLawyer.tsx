@@ -187,7 +187,7 @@ const ServicesReplyAndDetailsLawyer: React.FC<PropsIN> = ({ servID }) => {
 
     return (
         <div className="container mx-auto px-4  sm:px-6 lg:px-8">
-            <SecondHead title="تفاصيل الاستشارة" />
+            <SecondHead title="تفاصيل الخدمة" />
             <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6" initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}>

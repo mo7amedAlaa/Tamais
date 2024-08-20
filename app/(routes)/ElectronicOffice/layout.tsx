@@ -2,6 +2,7 @@
 import Footer from '@/app/_components/pages/home/layout/footer/Footer';
 import Header from '@/app/_components/ui/Header';
 import { PROFILE_TYPE } from '@/app/_helpers/config/constants';
+import ProtectedRoute from '@/app/_helpers/middleware/ProtectedRoute';
 import { motion } from 'framer-motion';
 import { Almarai, Cairo, Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
@@ -41,7 +42,7 @@ export default function RootLayout({
 	}, [userType]);
 
 	return (
-		<div>
+		<ProtectedRoute>
 			{userType !== 'lawyer' ? (
 				<motion.div
 					className='flex items-center justify-center font-semibold text-red-700 text-lg min-h-screen'
@@ -62,6 +63,6 @@ export default function RootLayout({
 					<Footer />
 				</div>
 			)}
-		</div>
+		</ProtectedRoute>
 	);
 }
