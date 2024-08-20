@@ -17,7 +17,7 @@ export default function RootLayout({
 	return (
 		<div className={`${cairo.className}  overflow-hidden text-black  bg-whit min-h-screen bg-gray-100 flex flex-col`}>
 			<Header />
-			<main className="flex-1 p-6 mt-12 ">{children}</main>
+			<main className="flex-1  mt-14 ">{children}</main>
 			<Footer />
 		</div>
 	);
