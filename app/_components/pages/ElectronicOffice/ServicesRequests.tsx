@@ -23,7 +23,7 @@ const statusMapping: Record<number, string> = {
   2: 'انتظار',
   3: 'متاخر',
   4: 'غير منجز',
-  5: 'منجز'
+  5: 'مكتملة'
 };
 
 function ServiceRequests() {
