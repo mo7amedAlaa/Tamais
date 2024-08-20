@@ -11,7 +11,7 @@ import star from '@/public/Icons/star.svg';
 import { useMutation } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Image from "next/image";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineQuickreply } from "react-icons/md";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -80,39 +80,7 @@ const Consultation_details_client: React.FC<PropsIN> = ({ consultID }) => {
         fetchReservationsFromClients();
     }, [fetchReservationsFromClients]);
 
-    const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setFile(event.target.files[0]);
-            setFileChosen(true);
-        }
-    };
 
-    const handleResponseChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        const newValue = event.target.value;
-        setResponse(newValue);
-
-        if (newValue.length < 10) {
-            setResponseError('يجب أن يكون الرد أكثر من 10 أحرف');
-        } else {
-            setResponseError(null);
-        }
-    };
-
-    const handleSubmit = (event: FormEvent) => {
-        event.preventDefault();
-        if (response.length < 10) {
-            setResponseError('يجب أن يكون الرد أكثر من 10 أحرف');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('reply_content', response);
-        formData.append('id', consultID);
-        if (file) {
-            formData.append('reply_file', file);
-        }
-        replyReservationsFromClients(formData);
-    };
     if (loading) return (
         <motion.div
             className="flex justify-center items-center min-h-screen"
