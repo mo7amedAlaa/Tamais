@@ -32,7 +32,7 @@ export default function Home() {
 		return <div>Loading...</div>;
 	} else {
 		return (
-			<ProtectedRoute>
+			<div>
 				<NotificationPanel
 					userProfile={userProfile}
 					isLoading={isLoading}
@@ -199,7 +199,7 @@ export default function Home() {
 						</div>
 					</div>
 				</main>
-			</ProtectedRoute >
+			</div >
 		);
 	}
 }
