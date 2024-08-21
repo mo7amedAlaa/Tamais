@@ -1,5 +1,5 @@
 'use client'
-import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
+ import { getListReservedFromClient, getListReservedFromDigitalGuide } from '@/app/_api/queries/office.query';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
@@ -135,7 +135,7 @@ function ConsultationsRequests() {
 
   return (
     <div className='container mx-auto min-h-screen'>
-      <SecondHead title={'طلبات الاستشارات'} />
+      <SecondHead title={'lawطلبات الاستشارات'} />
       <ActiveTitleTab
         activeTab={activeTab}
         setActiveTab={setActiveTab}

@@ -1,5 +1,5 @@
 'use client'
-import { getListReservedFromClient_Client, getListReservedFromDigitalGuide_Client } from '@/app/_api/queries/office.query';
+import { getListServicesFromClient_Client, getListServicesFromDigitalGuide_Client } from '@/app/_api/queries/office.query';
 import RequestConsultationCard from '@/app/_components/pages/ElectronicOffice/RequestConsultationCard';
 import ActiveTitleTab from '@/app/_components/ui/ActiveTitleTab';
 import SecondHead from '@/app/_components/ui/SecondHead';
@@ -24,7 +24,7 @@ const statusMapping: Record<number, string> = {
   5: 'مكتملة'
 };
 
-function ConsultationsRequests_Client() {
+function ServicesRequest_Cleint() {
   const [activeTab, setActiveTab] = useState<TabType>('Customers');
   const buttonTitles = {
     Customers: "العملاء",
@@ -44,7 +44,7 @@ function ConsultationsRequests_Client() {
   };
 
   const { mutate: fetchReservationsFromDigitalGuide } = useMutation({
-    mutationFn: getListReservedFromDigitalGuide_Client,
+    mutationFn: getListServicesFromDigitalGuide_Client,
     onSuccess: (res: any) => {
       if (res.status === 200) {
         setDigitalReservations(res.data.data.reservations || []);
@@ -63,7 +63,7 @@ function ConsultationsRequests_Client() {
   });
 
   const { mutate: fetchReservationsFromClients } = useMutation({
-    mutationFn: getListReservedFromClient_Client,
+    mutationFn: getListServicesFromClient_Client,
     onSuccess: (res: any) => {
       if (res.status === 200) {
         setClientsReservations(res.data.data.reservations || []);
@@ -135,7 +135,7 @@ function ConsultationsRequests_Client() {
 
   return (
     <div className='container mx-auto min-h-screen'>
-      <SecondHead title={'clientطلبات الاستشارات'} />
+      <SecondHead title={'طلبات الخدمااااات'} />
       <ActiveTitleTab
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -211,4 +211,4 @@ function ConsultationsRequests_Client() {
   );
 }
 
-export default ConsultationsRequests_Client;
+export default ServicesRequest_Cleint;
