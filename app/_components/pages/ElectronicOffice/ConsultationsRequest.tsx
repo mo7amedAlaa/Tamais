@@ -135,7 +135,7 @@ function ConsultationsRequests() {
 
   return (
     <div className='container mx-auto min-h-screen'>
-      <SecondHead title={'lawطلبات الاستشارات'} />
+      <SecondHead title={'طلبات الاستشارات'} />
       <ActiveTitleTab
         activeTab={activeTab}
         setActiveTab={setActiveTab}
