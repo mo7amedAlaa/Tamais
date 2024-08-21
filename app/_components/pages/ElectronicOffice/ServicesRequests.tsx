@@ -116,7 +116,7 @@ function ServiceRequests() {
 
   return (
     <div className="container mx-auto min-h-screen">
-      <SecondHead title={"lawطلبات الخدمات"} />
+      <SecondHead title={"طلبات الخدمات"} />
       <ActiveTitleTab
         activeTab={activeTab}
         setActiveTab={setActiveTab}

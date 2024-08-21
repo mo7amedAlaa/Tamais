@@ -79,8 +79,10 @@ export const API_ENDPOINTS = {
   CLIENT_ADVISORY_CLIENT: "client/advisory-services/ymtaz",
   CLIENT_APPOINTMENTS_DIGITAL: "client/reservations/lawyers",
   CLIENT_APPOINTMENTS_CLIENT: "client/reservations/clients",
-  CLIENT_SERVICES_DIGITAL: "client/services-request/digital-guide",
-  CLIENT_SERVICES_CLIENT: "client/services-request/ymtaz",
+  CLIENT_SERVICES_DIGITAL: "client/services/list",
+  CLIENT_SERVICES_CLIENT: "client/services/list",
+  // CLIENT_SERVICES_DIGITAL: "client/services-request/digital-guide",
+  // CLIENT_SERVICES_CLIENT: "client/services-request/ymtaz",
 };
 export const PROFILE_TYPE = "profileType";
 export const LandingSections = {
