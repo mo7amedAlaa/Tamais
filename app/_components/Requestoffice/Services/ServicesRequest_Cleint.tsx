@@ -135,7 +135,7 @@ function ServicesRequest_Cleint() {
 
   return (
     <div className='container mx-auto min-h-screen'>
-      <SecondHead title={'طلبات الخدمااااات'} />
+      <SecondHead title={'طلبات الخدماات'} />
       <ActiveTitleTab
         activeTab={activeTab}
         setActiveTab={setActiveTab}
