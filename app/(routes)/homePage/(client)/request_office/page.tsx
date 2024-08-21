@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 
 import Balance from '@/app/_components/Requestoffice/Balance';
 import Status_Event from '@/app/_components/Requestoffice/Status_Event';
+import Most_request from '@/app/_components/ui/Most_request';
 import style from './style.module.css';
 
 const Page: React.FC = () => {
@@ -38,6 +39,8 @@ const Page: React.FC = () => {
                     <Balance />
                     <Requests />
                     <ThirdHead title={'الاكثر طلبا'} />
+                    <Most_request />
+
                 </motion.div>
             </div>
         </motion.div>

@@ -48,7 +48,7 @@ export default function RootLayout({
                     transition={{ duration: 0.5 }}
                 >
                     <div>
-                        Sorry, This Page is Only Available for Lawyers
+                        Sorry, This Page is Only Available for Client
                     </div>
                 </motion.div>
             ) : (
