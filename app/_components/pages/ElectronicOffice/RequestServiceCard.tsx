@@ -12,7 +12,7 @@ interface RequestServiceCard {
   time?: string;
   price: string;
   senderName?: string;
-  senderImage?: string;
+  senderImage: string;
   importance?: string;
 }
 

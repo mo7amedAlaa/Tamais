@@ -180,7 +180,7 @@ function ServicesRequest_Cleint() {
                     importance={items.need_appointment}
                     price={items.ymtaz_price}
                     // senderName={items?.client?.name}
-                    // senderImage={items?.client?.photo}
+                   senderImage={items?.client?.photo}
                   />
                 </Link>
               </motion.div>
