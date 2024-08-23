@@ -4,7 +4,7 @@ import {
   getListServicesFromClient,
   getListServicesFromDigitalGuide,
 } from "@/app/_api/queries/office.query";
-import RequestConsultationCard from "@/app/_components/pages/ElectronicOffice/RequestConsultationCard";
+import RequestConsultationCard from "@/app/_components/pages/ElectronicOffice/RequestServiceCard";
 import ActiveTitleTab from "@/app/_components/ui/ActiveTitleTab";
 import SecondHead from "@/app/_components/ui/SecondHead";
 import { useMutation } from "@tanstack/react-query";

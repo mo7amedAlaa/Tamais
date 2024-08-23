@@ -75,12 +75,12 @@ export const API_ENDPOINTS = {
   SERVICE_CREATE_PRICES: "lawyer/services-request/create",
   CLIENT_ANALYTICS: "v1/profile/my-page", //untill create
   CLIENT_WALLET: "client/payouts/wallet", //untill create
-  CLIENT_ADVISORY_DIGITAL: "client/advisory-services/digital-guide",
-  CLIENT_ADVISORY_CLIENT: "client/advisory-services/ymtaz",
   CLIENT_APPOINTMENTS_DIGITAL: "client/reservations/lawyers",
   CLIENT_APPOINTMENTS_CLIENT: "client/reservations/clients",
   CLIENT_SERVICES_DIGITAL: "client/services/list",
-  CLIENT_SERVICES_CLIENT: "client/services/list",
+  CLIENT_SERVICES_CLIENT: "client/services-request",
+  CLIENT_ADVISORY_DIGITAL: "client/advisory-services/digital-guide",
+  CLIENT_ADVISORY_CLIENT: "client/advisory-services/ymtaz",
   // CLIENT_SERVICES_DIGITAL: "client/services-request/digital-guide",
   // CLIENT_SERVICES_CLIENT: "client/services-request/ymtaz",
 };
